@@ -1,0 +1,282 @@
+/* Reset styles for HTML and body */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(194, 194, 194, 0.247);
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* Logo styling */
+.logo {
+  height: 80px;
+  position: absolute;
+  left: 48px; 
+}
+
+/* Header container styling */
+.header-container {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 90%;
+  margin: 20px auto;
+  justify-content: center; /* Center elements in the header */
+  position: relative;
+}
+
+/* Title container styling */
+.title-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* Title styling */
+.title {
+  color: black;
+  margin: 0; /* Remove default margins */
+}
+
+/* Main container styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+/* Cards wrapper styling */
+.cards-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  gap: 15px;
+  margin-bottom: 20px; /* Added margin to space between cards and search bar */
+}
+
+/* Individual card container styling */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 65%; /* Adjusted width for Card */
+  margin-bottom: 40px; /* Increased bottom margin */
+  position: relative; /* Ensure relative positioning for highlighting */
+}
+
+/* Adjusted width for Card2 */
+.card-container:nth-child(2) {
+  width: 40%;
+}
+
+/* Card title styling */
+.card-title {
+  text-align: center; /* Center the card title */
+  font-size: 20px; /* Optional: adjust font size */
+  font-weight: bold; /* Optional: make the title bold */
+  margin-bottom: 20px; /* Optional: adjust bottom margin */
+}
+
+/* Sections container styling */
+.sections-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Section styling */
+.section, .country-details-table{
+  flex: 1 0 auto;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  text-align: center; /* Center section headers */
+}
+
+/* Section header styling */
+.section-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* Unordered list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* List item styling */
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative; /* Relative positioning for border highlight */
+}
+
+/* List item image styling */
+li img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+/* Selected list item styling */
+li.selected {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+/* Selected list item pseudo-element styling */
+li.selected::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 2px solid #333; /* Highlight border color */
+  border-radius: 8px; /* Rounded corners */
+  z-index: -1; /* Behind content */
+}
+
+/* Hover state for list items */
+li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Continent header styling */
+.continent {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* Clear selection button styling */
+.clear-button {
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 14px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Increased margin to create space */
+  transition: background-color 0.3s;
+  align-self:center;
+}
+
+/* Hover state for clear selection button */
+.clear-button:hover {
+  background-color: #0056b3;
+}
+
+/* Searchbar container styling */
+.searchbar-container {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 20px; /* Additional bottom margin */
+}
+
+/* Dropdown styling */
+.searchbar-dropdown {
+  padding: 10px;
+  margin-right: 10px; /* Space between dropdown and input */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff; /* Dropdown background color */
+  color: #333; /* Dropdown text color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better look */
+}
+
+/* Input field styling */
+.searchbar-input {
+  width: 500px;; /* Make the input take up available space */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px; /* Space between input and button */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better look */
+}
+
+/* Search button styling */
+.searchbar-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hover state for search button */
+.searchbar-button:hover {
+  background-color: #0056b3;
+}
+
+/* Add this to your existing CSS */
+.results-table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.results-table th, .results-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.results-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+
+
+.country-details-table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+
+.country-details-table td {
+  padding: 10px;
+  border: 1.5px thin #ddd;
+  text-align:center;
+
+}
+
+.country-details-table a, .country-details-table div{
+  text-decoration: none;
+  color: #0073e6;
+  font-weight: 600;
+}
+
+
