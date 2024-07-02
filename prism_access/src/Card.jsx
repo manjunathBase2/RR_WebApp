@@ -18,7 +18,7 @@ function Card({ setSelectedCountry, setCardType }) {
         setCountryUrl("https://docs.google.com/document/d/1oEOdFCjHb9umnTWeju0w7NBCfbtf4usY904Tw8mae1A/edit?usp=sharing");
         setMaBodyName("BfArM - Federal Institute for Drugs and Medical Devices");
         setMaBodyUrl("https://www.bfarm.de/EN/Medicinal-products/Licensing/Licensing-procedures/_node.html");
-      } else if (selectedCountry === 'Europe') {
+      } else if (selectedCountry === 'European Union') {
         setCountryUrl('https://docs.google.com/document/d/10GRfl8GDVBQxiv0V5chL51NQdwWKvNJgqkTkvabu_1k/edit?usp=sharing');
         setMaBodyName('European Medicies Agency');
         setMaBodyUrl('https://www.ema.europa.eu/en/human-regulatory-overview/marketing-authorisation/obtaining-eu-marketing-authorisation-step-step');
@@ -38,14 +38,6 @@ function Card({ setSelectedCountry, setCardType }) {
         setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
         setMaBodyName('FDA(Food and Drug Administration)');
         setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
-      } else if(selectedCountry === 'A'){
-        setCountryUrl('');
-        setMaBodyName('');
-        setMaBodyUrl('');
-      } else if(selectedCountry === 'B'){
-        setCountryUrl('');
-        setMaBodyName('');
-        setMaBodyUrl('');
       }
     } else {
       setCountryUrl('');

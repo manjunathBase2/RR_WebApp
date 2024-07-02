@@ -129,5 +129,3 @@ function Card2({ setSelectedCountry, setCardType }) {
 }
 
 export default Card2;
-
-

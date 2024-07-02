@@ -1,4 +1,4 @@
-/* Reset styles for HTML and body */
+Reset styles for HTML and body
 html, body {
   margin: 0;
   padding: 0;
@@ -12,7 +12,7 @@ html, body {
 .logo {
   height: 80px;
   position: absolute;
-  left: 48px; 
+  left: 48px;
 }
 
 /* Header container styling */
@@ -53,7 +53,7 @@ html, body {
 }
 
 /* Cards wrapper styling */
-.cards-wrapper {
+.cards-wrapper{
   display: flex;
   justify-content: space-between;
   width: 95%;
@@ -193,38 +193,76 @@ li:hover {
   background-color: #0056b3;
 }
 
-/* Searchbar container styling */
 .searchbar-container {
-  display: flex;
-  align-items: center;
   width: 90%;
-  margin-bottom: 20px; /* Additional bottom margin */
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 200px;
+  font-size: 18px;
 }
 
-/* Dropdown styling */
+.searchbar-left{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+  justify-content: left;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+
+
+.searchbar-right {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+  justify-content: left;
+  margin-bottom: 10px;
+  gap: 20px;
+  
+}
+
+
+
 .searchbar-dropdown {
-  padding: 10px;
-  margin-right: 10px; /* Space between dropdown and input */
+  padding: 10px 35px;
+  margin: 10px 20px;
   border: 1px solid #ddd;
+  
   border-radius: 5px;
   font-size: 16px;
-  background-color: #fff; /* Dropdown background color */
-  color: #333; /* Dropdown text color */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better look */
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* width: 100%;  */
+  /* Adjust width as necessary */
 }
 
-/* Input field styling */
 .searchbar-input {
-  width: 500px;; /* Make the input take up available space */
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 16px;
-  margin-right: 10px; /* Space between input and button */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better look */
+  font-size: 18px;
+  margin-right: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* width: auto; */
+
 }
 
-/* Search button styling */
+.searchbar-input-text{
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-right: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 700px;
+}
+
 .searchbar-button {
   background-color: #007bff;
   color: #ffffff;
@@ -233,14 +271,51 @@ li:hover {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 200px;
+  text-align: center;
+
 }
 
-/* Hover state for search button */
 .searchbar-button:hover {
+
   background-color: #0056b3;
 }
 
-/* Add this to your existing CSS */
+.searchbar-button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+}
+
+#end-date {
+margin: 0 16px;
+padding: 10px 50px;
+}
+
+
+#start-date {
+  margin: 0 11px;
+  padding: 10px 50px;
+  }
+
+
+.searchbar-container label{
+  margin-right: 15px;
+  font-weight: 600;
+  color: rgb(51, 51, 51);
+  font-size: 18px;
+}
+
+/* Container for the results table to enable scrolling */
+.results-table-container {
+  max-height: 500px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: auto; /* Enable horizontal scrolling */
+
+}
+
 .results-table {
   width: 90%;
   margin: 20px auto;
@@ -250,14 +325,55 @@ li:hover {
 .results-table th, .results-table td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: left;
+  /* text-align: justify; */
 }
 
 .results-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+  background-color: rgb(68, 105, 184);
+  color: white;  /* Optional: to make the text readable */
 }
 
+/* Change the background color of all data columns to blue */
+.results-table td {
+  background-color: #ebf5ff;
+  color: black;  /* Optional: to ensure text is readable */
+}
+
+.visualizations-container {
+  display: flex;
+  justify-content: space-around; /* Adjust as needed */
+  gap: 10px; 
+  margin-top: 20px;
+  /* max-width: 1200px; */
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  padding: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Adjusted width for Card */
+  margin-bottom: 40px; /* Increased bottom margin */
+  position: relative;
+}
+
+/* Donut chart container styling */
+.visualization.donut-chart {
+  width: 25%; /* 25% of the space */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Bar chart container styling */
+.visualization.bar-chart {
+  width: 70%; /* 75% of the space */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Ensures image fills container */
+.visualization img {
+  width: 100%;
+}
 
 
 .country-details-table {
@@ -279,4 +395,26 @@ li:hover {
   font-weight: 600;
 }
 
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* background-color: #f8f8f8; */
+  /* border-top: 1px solid #e7e7e7; */
+  margin-top: 20px;
+  gap: 20px;
+  flex-shrink: 0;
+}
 
+.footer-logo {
+  width: 50px; 
+  /* margin-bottom: 10px; */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
