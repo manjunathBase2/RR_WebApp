@@ -1,6 +1,6 @@
 # R&R Data Explorer
 
-- prefer conventional commit messages
+- prefer conventional commit message format
 
   
 ![Screenshot (309)](https://github.com/manjunathBase2/RR_WebApp/assets/146637969/8591402d-d870-46fb-81cb-6eae1ef04131)
