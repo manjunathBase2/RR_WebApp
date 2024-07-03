@@ -5,7 +5,7 @@ import Card from "./Card.jsx";
 import Card2 from "./Card2.jsx";
 import Searchbar from './Searchbar.jsx';
 import Resulttable from './Resulttable.jsx';
-import Footer from './Footer.jsx'; 
+import Footer from './Footer.jsx';
 import Roche_logo from "./assets/Roche_Logo.png"
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         setResults(data.results);
         setVisualization1(data.visualization1);
         setVisualization2(data.visualization2);
-      };
+    };
 
     useEffect(() => {
         console.log("Results state updated:", results);  // Log state update for results
@@ -45,24 +45,24 @@ function App() {
                     <Searchbar selectedCountry={selectedCountry} cardType={cardType} onResultsFetched={handleResultsFetched} />
                 </div>
                 <>
-                {(visualization1 || visualization2 )&& (
-                    <div className="visualizations-container">
-                                        <div className="visualization.donut-chart ">
-                                            {visualization1 && (
-                                                <div>
-                                                <img src={`data:image/png;base64,${visualization1}`} alt="Donut Chart" />
-                                            </div>
-                                            )}
-                                        </div>
-                                        <div className="visualization.bar-chart">
-                                            {visualization2 && (
-                                                <div>
-                                                <img src={`data:image/png;base64,${visualization2}`} alt="Bar Graph" />
-                                            </div>
-                                            )}
-                                        </div>
-                    </div>
-                )}
+                    {(visualization1 || visualization2) && (
+                        <div className="visualizations-container">
+                            <div className="visualization.donut-chart ">
+                                {visualization1 && (
+                                    <div>
+                                        <img src={`data:image/png;base64,${visualization1}`} alt="Donut Chart" />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="visualization.bar-chart">
+                                {visualization2 && (
+                                    <div>
+                                        <img src={`data:image/png;base64,${visualization2}`} alt="Bar Graph" />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </>
                 <div className='results'>
                     {results.length > 0 ? <Resulttable results={results} /> : <p></p>}

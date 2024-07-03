@@ -65,7 +65,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                 results: response.data.results,
                 visualization1: response.data.visualization1,
                 visualization2: response.data.visualization2
-              }); // Pass the data to the parent component
+            }); // Pass the data to the parent component
         } catch (error) {
             console.error("There was an error with the search:", error);
             alert("Failed to fetch results. Please try again later.");
@@ -76,60 +76,60 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
 
     return (
         <>
-        <div className="searchbar-container">
-            <div className="searchbar-left">
-                <div>
-                    <label>Select Criteria:</label>
-                    <select
-                        value={searchType}
-                        onChange={handleSearchTypeChange}
-                        className="searchbar-dropdown"
+            <div className="searchbar-container">
+                <div className="searchbar-left">
+                    <div>
+                        <label>Select Criteria:</label>
+                        <select
+                            value={searchType}
+                            onChange={handleSearchTypeChange}
+                            className="searchbar-dropdown"
                         >
-                        <option value="Product Name">Product Name</option>
-                        <option value="INN - Active Substance">Active Substance</option>
-                        <option value="Therapeutic Area">Therapeutic Area</option>
-                    </select>
-                </div>
-                
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleSearchQueryChange}
-                    className="searchbar-input-text"
-                    placeholder={searchType === 'Product Name' ? 'Search by Product Name' : searchType === 'INN - Active Substance' ? 'Search by Active Substance' : 'Search by Therapeutic Area'}
-                    />
-            </div>
-            <div className="searchbar-right">
-                <div>
-                <label htmlFor="start-date">Start Date:</label>
-                <input
-                    type="date"
-                    id="start-date"
-                    value={startDate}
-                    onChange={handleStartDateChange}
-                    className="searchbar-input"
-                />
-                </div>
-                <div>
-                <label htmlFor="end-date">End Date:</label>
-                <input
-                    type="date"
-                    id="end-date"
-                    value={endDate}
-                    onChange={handleEndDateChange}
-                    className="searchbar-input"
-                />
-                </div>
-            </div>
-        </div>
-        <div className='searchbar-button-container'>
+                            <option value="Product Name">Product Name</option>
+                            <option value="INN - Active Substance">Active Substance</option>
+                            <option value="Therapeutic Area">Therapeutic Area</option>
+                        </select>
+                    </div>
 
-            <div className="searchbar-button">
-                <button onClick={handleSearch} className="searchbar-button" disabled={loading}>
-                    {loading ? "Searching..." : "Launch Search"}
-                </button>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={handleSearchQueryChange}
+                        className="searchbar-input-text"
+                        placeholder={searchType === 'Product Name' ? 'Search by Product Name' : searchType === 'INN - Active Substance' ? 'Search by Active Substance' : 'Search by Therapeutic Area'}
+                    />
+                </div>
+                <div className="searchbar-right">
+                    <div>
+                        <label htmlFor="start-date">Start Date:</label>
+                        <input
+                            type="date"
+                            id="start-date"
+                            value={startDate}
+                            onChange={handleStartDateChange}
+                            className="searchbar-input"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="end-date">End Date:</label>
+                        <input
+                            type="date"
+                            id="end-date"
+                            value={endDate}
+                            onChange={handleEndDateChange}
+                            className="searchbar-input"
+                        />
+                    </div>
+                </div>
             </div>
-        </div>
+            <div className='searchbar-button-container'>
+
+                <div className="searchbar-button">
+                    <button onClick={handleSearch} className="searchbar-button" disabled={loading}>
+                        {loading ? "Searching..." : "Launch Search"}
+                    </button>
+                </div>
+            </div>
         </>
     );
 }
