@@ -1,10 +1,8 @@
 
-
-
 function Header() {
     return (
         <div>
-            <h1 className="title">R&R Data Explorer</h1>
+            <h1 className="title">Clinical Trials</h1>
         </div>
     );
 }

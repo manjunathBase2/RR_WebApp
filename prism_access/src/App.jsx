@@ -36,6 +36,11 @@ function App() {
                 <div className="header-container">
                     <img src={Roche_logo} className="logo" alt="Logo" />
                     <Header />
+                    <nav>
+                        <ul>
+                            <li><a className="navigation-link" href="./clinical/">Clinical Trials</a></li>
+                        </ul>
+                    </nav>
                 </div>
                 <div className="cards-wrapper">
                     <Card setSelectedCountry={setSelectedCountry} setCardType={setCardType} />
