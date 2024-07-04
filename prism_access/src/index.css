@@ -338,7 +338,7 @@ li:hover {
 .results-table-container {
   display: flex;
   max-height: 500px;
-  max-width: 50%;
+  max-width: 70%;
   min-width: 1300px;
   flex-direction: column;
   overflow-y: scroll; /* Enable vertical scrolling */
@@ -362,8 +362,11 @@ li:hover {
 .results-table td {
   border: 1px solid #ddd;
   padding: 8px;
+  min-width: 200px;
+  /* max-width: 250px; */
   /* flex-basis: 300px; */
   /* text-align: justify; */
+  text-wrap: normal;
 }
 
 .results-table th {
@@ -468,4 +471,21 @@ li:hover {
 .clinical-container Footer{
   align-content: end;
   margin-top: 400px;
+}
+
+.results--container {
+  /* margin-left: 1000px; */
+  /* margin: 0px 1000px; */
+  /* align-self: auto */
+  display: flex;
+  justify-content: center;
+}
+
+.clinical-table-container{
+  max-width: 70vw;
+  max-height: 700px;
+}
+
+.clinical-search select,input,button {
+  font-size: 18px;
 }

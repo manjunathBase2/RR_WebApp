@@ -34,8 +34,8 @@ function ClinicalTrials()  {
                     </ul>
                 </nav>
             </div>
-            <div className="search-container card-container">
-                <select className= "search-container-child" value={columnName} onChange={e => setColumnName(e.target.value)}>
+            <div className="search-container card-container clinical-search">
+                <select className= "search-container-child " value={columnName} onChange={e => setColumnName(e.target.value)}>
                     <option value="">Select Criteria</option>
                     <option value="NCT Number">NCT Number</option>
                     <option value="Phases">Phases</option>
@@ -51,7 +51,8 @@ function ClinicalTrials()  {
             </div>
             <div className="results--container">
                 {results.length > 0 ? (
-                    <table>
+                    <div className="results-table-container clinical-table-container">
+                    <table className="results-table">
                         <thead>
                             <tr>
                                 {Object.keys(results[0]).map(key => (
@@ -69,6 +70,7 @@ function ClinicalTrials()  {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 ) : (
                     <p>This page is under development.</p>
                 )}
