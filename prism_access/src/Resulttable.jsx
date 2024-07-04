@@ -46,7 +46,6 @@
 // export default Resulttable;
 import React from 'react';
 
-
 function Resulttable({ results }) {
     console.log("Results in Resulttable:", results);
 
@@ -83,7 +82,7 @@ function Resulttable({ results }) {
                                             {row[column]}
                                         </a>
                                     ) : (
-                                        row[column] !== null ? row[column] : 'N/A'
+                                        row[column] !== null ? row[column] : '-'
                                     )}
                                 </td>
                             ))}

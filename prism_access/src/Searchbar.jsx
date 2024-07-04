@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
@@ -7,6 +8,49 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [loading, setLoading] = useState(false);
+    const [availableColumns, setAvailableColumns] = useState(["Product Name", "INN - Active Substance", "Therapeutic Area"]); // Default options
+
+    useEffect(() => {
+        const fetchColumns = async () => {
+            if (!selectedCountry || !cardType) return;
+
+            let filePath;
+            if (cardType === 'MA' && selectedCountry === 'Germany') {
+                filePath = "1";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'Germany') {
+                filePath = "2";
+            } else if (cardType === 'MA' && selectedCountry === 'European Union') {
+                filePath = "3";
+            } else if (cardType === 'MA' && selectedCountry === 'USA') {
+                filePath = "4";
+            } else if (cardType === 'MA' && selectedCountry === 'Scotland') {
+                filePath = "5";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'Scotland') {
+                filePath = "6";
+            } else if (cardType === 'MA' && selectedCountry === 'Australia') {
+                filePath = "7";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'Australia') {
+                filePath = "8";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'UK') {
+                filePath = "9";
+            } else if (cardType === 'MA' && selectedCountry === 'UK') {
+                filePath = "10";
+            } else {
+                alert("Invalid card type.");
+                return;
+            }
+
+            try {
+                const response = await axios.post('http://localhost:5000/get_columns', { file_path: filePath });
+                console.log("Fetched columns:", response.data.columns);  // Log the response for debugging
+                setAvailableColumns(response.data.columns);
+            } catch (error) {
+                console.error("There was an error fetching columns:", error);
+            }
+        };
+
+        fetchColumns();
+    }, [selectedCountry, cardType]);
 
     const handleSearchTypeChange = (e) => {
         setSearchType(e.target.value);
@@ -22,6 +66,13 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
 
     const handleEndDateChange = (e) => {
         setEndDate(e.target.value);
+    };
+
+    const clearEntries = () => {
+        setSearchType('Product Name'); 
+        setSearchQuery('');  
+        setStartDate('');  
+        setEndDate('');
     };
 
     const handleSearch = async () => {
@@ -42,13 +93,28 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
             searchData.search_term = searchQuery;
         }
 
-        // Set file_path based on cardType
         let filePath;
-        if (cardType === 'MA') {
+        if (cardType === 'MA' && selectedCountry === 'Germany') {
             filePath = "1";
-        } else if (cardType === 'Reimbursement') {
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Germany') {
             filePath = "2";
-        } else {
+        } else if (cardType === 'MA' && selectedCountry === 'European Union') {
+            filePath = "3";
+        } else if (cardType === 'MA' && selectedCountry === 'USA') {
+            filePath = "4";
+        } else if (cardType === 'MA' && selectedCountry === 'Scotland') {
+            filePath = "5";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Scotland') {
+            filePath = "6";
+        } else if (cardType === 'MA' && selectedCountry === 'Australia') {
+            filePath = "7";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Australia') {
+            filePath = "8";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'UK') {
+            filePath = "9";
+        } else if (cardType === 'MA' && selectedCountry === 'UK') {
+            filePath = "10";
+        }else {
             alert("Invalid card type.");
             setLoading(false);
             return;
@@ -61,11 +127,16 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
         try {
             const response = await axios.post('http://localhost:5000/filter', searchData);
             console.log("Response Data:", response.data);
+
+            if (response.data.results.length === 0) {
+                alert("No records found.");
+            }
+
             onResultsFetched({
                 results: response.data.results,
                 visualization1: response.data.visualization1,
                 visualization2: response.data.visualization2
-            }); // Pass the data to the parent component
+            });
         } catch (error) {
             console.error("There was an error with the search:", error);
             alert("Failed to fetch results. Please try again later.");
@@ -85,9 +156,9 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                             onChange={handleSearchTypeChange}
                             className="searchbar-dropdown"
                         >
-                            <option value="Product Name">Product Name</option>
-                            <option value="INN - Active Substance">Active Substance</option>
-                            <option value="Therapeutic Area">Therapeutic Area</option>
+                            {availableColumns.includes("Product Name") && <option value="Product Name">Product Name</option>}
+                            {availableColumns.includes("Active Substance") && <option value="INN - Active Substance">Active Substance</option>}
+                            {availableColumns.includes("Therapeutic Area") && <option value="Therapeutic Area">Therapeutic Area</option>}
                         </select>
                     </div>
 
@@ -123,13 +194,13 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                 </div>
             </div>
             <div className='searchbar-button-container'>
-
                 <div className="searchbar-button">
                     <button onClick={handleSearch} className="searchbar-button" disabled={loading}>
                         {loading ? "Searching..." : "Launch Search"}
                     </button>
                 </div>
             </div>
+
         </>
     );
 }
