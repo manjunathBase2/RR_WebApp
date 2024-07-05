@@ -8,7 +8,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [loading, setLoading] = useState(false);
-    const [availableColumns, setAvailableColumns] = useState(["Product Name", "INN - Active Substance", "Therapeutic Area"]); // Default options
+    const [availableColumns, setAvailableColumns] = useState(["Product Name", "Active Substance", "Therapeutic Area"]); // Default options
 
     useEffect(() => {
         const fetchColumns = async () => {
@@ -157,7 +157,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                             className="searchbar-dropdown"
                         >
                             {availableColumns.includes("Product Name") && <option value="Product Name">Product Name</option>}
-                            {availableColumns.includes("Active Substance") && <option value="INN - Active Substance">Active Substance</option>}
+                            {availableColumns.includes("Active Substance") && <option value="Active Substance">Active Substance</option>}
                             {availableColumns.includes("Therapeutic Area") && <option value="Therapeutic Area">Therapeutic Area</option>}
                         </select>
                     </div>
@@ -167,7 +167,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                         value={searchQuery}
                         onChange={handleSearchQueryChange}
                         className="searchbar-input-text"
-                        placeholder={searchType === 'Product Name' ? 'Search by Product Name' : searchType === 'INN - Active Substance' ? 'Search by Active Substance' : 'Search by Therapeutic Area'}
+                        placeholder={searchType === 'Product Name' ? 'Search by Product Name' : searchType === 'Active Substance' ? 'Search by Active Substance' : 'Search by Therapeutic Area'}
                     />
                 </div>
                 <div className="searchbar-right">
