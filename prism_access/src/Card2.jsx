@@ -114,7 +114,7 @@ function Card2({ setSelectedCountry, setCardType }) {
                       </td>
                       <td>
                         <a href={regionUrl} target="_blank" rel="noopener noreferrer">
-                          Reimbursement Summary <i className="fas fa-external-link-alt"></i>
+                          Reimbursement Process <i className="fas fa-external-link-alt"></i>
                         </a>
                       </td>
                     </tr>

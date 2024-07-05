@@ -72,7 +72,7 @@ function ClinicalTrials()  {
                     </table>
                     </div>
                 ) : (
-                    <p>This page is under development.</p>
+                    <p></p>
                 )}
             </div>
             <Footer />

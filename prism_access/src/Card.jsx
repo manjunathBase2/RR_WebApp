@@ -126,7 +126,7 @@ function Card({ setSelectedCountry, setCardType }) {
                       </td>
                       <td>
                         <a href={countryUrl} target="_blank" rel="noopener noreferrer">
-                          MA Summary <i className="fas fa-external-link-alt"></i>
+                          Medical Authorization Process <i className="fas fa-external-link-alt"></i>
                         </a>
                       </td>
                     </tr>
