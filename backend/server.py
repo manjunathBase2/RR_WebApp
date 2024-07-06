@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import numpy as np
+from waitress import serve
 
 # app = Flask(__name__)
 app = Flask(__name__, static_folder="../client/build", static_url_path="/")
@@ -257,4 +258,4 @@ def filter_clinical_trials_route():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    serve(app,host="0.0.0.0",port=5000,threads=5)
