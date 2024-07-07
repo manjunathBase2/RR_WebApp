@@ -257,5 +257,11 @@ def filter_clinical_trials_route():
         logging.error(f"Error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+mode = 'dev'
+
 if __name__ == "__main__":
-    serve(app,host="0.0.0.0",port=5000,threads=5)
+    
+    if mode == 'dev':
+        app.run(debug=True)
+    else:
+        serve(app,host="0.0.0.0",port=5000,threads=5)
