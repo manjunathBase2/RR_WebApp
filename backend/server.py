@@ -44,7 +44,7 @@ def load_data(file_path):
         file_path = r'data\UK_MA.xlsx'
     file_path = os.path.join(path, file_path)
     df = pd.read_excel(file_path)
-    df['Dateofdecision'] = pd.to_datetime(df['Date of decision'], errors='coerce')
+    df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce')
     return df
 
 # Function to filter data based on criteria
@@ -54,20 +54,20 @@ def filter_data(df, column_name, search_term, start_date, end_date):
     if start_date and end_date:
         start_date = pd.to_datetime(start_date, errors='coerce')
         end_date = pd.to_datetime(end_date, errors='coerce')
-        df = df[(df['Dateofdecision'] >= start_date) & (df['Dateofdecision'] <= end_date)]
+        df = df[(df['Date of decision'] >= start_date) & (df['Date of decision'] <= end_date)]
     elif start_date:
         start_date = pd.to_datetime(start_date, errors='coerce')
-        df = df[df['Dateofdecision'] >= start_date]
+        df = df[df['Date of decision'] >= start_date]
     elif end_date:
         end_date = pd.to_datetime(end_date, errors='coerce')
-        df = df[df['Dateofdecision'] <= end_date]
+        df = df[df['Date of decision'] <= end_date]
 
     if column_name and search_term:
         df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False)]
 
     logging.debug(f"Filtered data: {df.head()}")
 
-    df = df.drop(columns=['Dateofdecision'])
+    df = df.drop(columns=['Date of decision'])
     df = df.dropna(axis=1, how='all')  # Remove columns with all missing values
     df = df.where(pd.notnull(df), None)  # Replace NaN with None
     

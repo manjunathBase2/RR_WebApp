@@ -381,6 +381,37 @@ li:hover {
   color: black; /* Optional: to ensure text is readable */
 }
 
+
+.table-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    max-width: 200px; /* Adjust this value as needed */
+    position: relative;
+  }
+  
+  .table-cell.expanded {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+  }
+  
+  .table-cell .full-text {
+    display: none;
+  }
+  
+  /* .table-cell.expanded .full-text {
+    display: block;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+} */
+
+
+
 .visualizations-container {
   display: flex;
   justify-content: space-around; /* Adjust as needed */
@@ -488,4 +519,22 @@ li:hover {
 
 .clinical-search select,input,button {
   font-size: 18px;
+}
+
+
+/* Add these styles to your index.css */
+.results-table td {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+.results-table td.expanded {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+    background-color: #f1f1f1; /* Optional: highlight the expanded cell */
 }
