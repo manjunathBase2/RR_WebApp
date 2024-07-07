@@ -287,10 +287,10 @@ def autosuggest():
 
 
 
-mode = 'dev'
+mode = 'prod'
 
 if __name__ == "__main__":
     if mode == 'dev':
         app.run(debug=True)
-    else:
-        serve(app,host="0.0.0.0",port=5000,threads=5)
+    elif mode == 'prod':
+        serve(app,host="0.0.0.0",port=5000,threads=7)
