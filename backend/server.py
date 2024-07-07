@@ -164,6 +164,11 @@ def filter_data(df, column_name, search_term, start_date, end_date):
             bar_buf.seek(0)
             bar_chart = base64.b64encode(bar_buf.getvalue()).decode('utf-8')
             plt.close(fig)
+            legend=ax.legend()
+            num_legends=len(legend.get_texts())
+            if num_legends>9:
+                bar_chart=None
+                donut_chart=None
         else: 
             bar_chart=None
     else:

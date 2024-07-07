@@ -107,7 +107,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const getSuggestionValue = suggestion => suggestion;
 
     const renderSuggestion = suggestion => (
-        <div>
+        <div className="suggestion-item">
             {suggestion}
         </div>
     );
