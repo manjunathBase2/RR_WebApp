@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Autosuggest from 'react-autosuggest';
 
 function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [searchType, setSearchType] = useState('Product Name');
@@ -9,6 +10,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [endDate, setEndDate] = useState('');
     const [loading, setLoading] = useState(false);
     const [availableColumns, setAvailableColumns] = useState(["Product Name", "Active Substance", "Therapeutic Area"]); // Default options
+    const [suggestions, setSuggestions] = useState([]);
 
     useEffect(() => {
         const fetchColumns = async () => {
@@ -54,25 +56,66 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
 
     const handleSearchTypeChange = (e) => {
         setSearchType(e.target.value);
+        setSearchQuery('');
     };
 
-    const handleSearchQueryChange = (e) => {
-        setSearchQuery(e.target.value);
+    const handleSearchQueryChange = (e, { newValue }) => {
+        setSearchQuery(newValue);
     };
 
-    const handleStartDateChange = (e) => {
-        setStartDate(e.target.value);
+    const fetchSuggestions = async ({ value }) => {
+        if (!selectedCountry || !cardType) return;
+
+        let filePath;
+        // Map selectedCountry and cardType to filePath (same as above)
+        if (cardType === 'MA' && selectedCountry === 'Germany') {
+            filePath = "1";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Germany') {
+            filePath = "2";
+        } else if (cardType === 'MA' && selectedCountry === 'European Union') {
+            filePath = "3";
+        } else if (cardType === 'MA' && selectedCountry === 'USA') {
+            filePath = "4";
+        } else if (cardType === 'MA' && selectedCountry === 'Scotland') {
+            filePath = "5";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Scotland') {
+            filePath = "6";
+        } else if (cardType === 'MA' && selectedCountry === 'Australia') {
+            filePath = "7";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Australia') {
+            filePath = "8";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'UK') {
+            filePath = "9";
+        } else if (cardType === 'MA' && selectedCountry === 'UK') {
+            filePath = "10";
+        }
+
+        try {
+            const response = await axios.get('http://localhost:5000/autosuggest', {
+                params: { query: value, column_name: searchType, file_path: filePath }
+            });
+            setSuggestions(response.data);
+        } catch (error) {
+            console.error("Error fetching suggestions:", error);
+        }
     };
 
-    const handleEndDateChange = (e) => {
-        setEndDate(e.target.value);
+    const clearSuggestions = () => {
+        setSuggestions([]);
     };
 
-    const clearEntries = () => {
-        setSearchType('Product Name'); 
-        setSearchQuery('');  
-        setStartDate('');  
-        setEndDate('');
+    const getSuggestionValue = suggestion => suggestion;
+
+    const renderSuggestion = suggestion => (
+        <div>
+            {suggestion}
+        </div>
+    );
+
+    const inputProps = {
+        placeholder: `Search by ${searchType}`,
+        value: searchQuery,
+        onChange: handleSearchQueryChange
     };
 
     const handleSearch = async () => {
@@ -161,14 +204,15 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                             {availableColumns.includes("Therapeutic Area") && <option value="Therapeutic Area">Therapeutic Area</option>}
                         </select>
                     </div>
-
-                    <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={handleSearchQueryChange}
-                        className="searchbar-input-text"
-                        placeholder={searchType === 'Product Name' ? 'Search by Product Name' : searchType === 'Active Substance' ? 'Search by Active Substance' : 'Search by Therapeutic Area'}
-                    />
+                        <Autosuggest
+                            suggestions={suggestions}
+                            onSuggestionsFetchRequested={fetchSuggestions}
+                            onSuggestionsClearRequested={clearSuggestions}
+                            getSuggestionValue={getSuggestionValue}
+                            renderSuggestion={renderSuggestion}
+                            inputProps={inputProps}
+                            className="searchbar-input-text"
+                        />
                 </div>
                 <div className="searchbar-right">
                     <div>
@@ -177,7 +221,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                             type="date"
                             id="start-date"
                             value={startDate}
-                            onChange={handleStartDateChange}
+                            onChange={(e) => setStartDate(e.target.value)}
                             className="searchbar-input"
                         />
                     </div>
@@ -187,7 +231,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                             type="date"
                             id="end-date"
                             value={endDate}
-                            onChange={handleEndDateChange}
+                            onChange={(e) => setEndDate(e.target.value)}
                             className="searchbar-input"
                         />
                     </div>

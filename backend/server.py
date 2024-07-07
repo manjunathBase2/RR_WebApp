@@ -260,6 +260,28 @@ def filter_clinical_trials_route():
         logging.error(f"Error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/autosuggest', methods=['GET'])
+def autosuggest():
+    query = request.args.get('query', '')
+    column_name = request.args.get('column_name', 'Product Name')
+    file_path = request.args.get('file_path', '')
+
+    if not file_path:
+        return jsonify([])  # Return an empty list if no file path is provided
+
+    try:
+        df = load_data(file_path)
+        if query and column_name in df.columns:
+            results = df[df[column_name].astype(str).str.contains(query, case=False, na=False)]
+            suggestions = results[column_name].dropna().unique().tolist()
+            return jsonify(suggestions[:10])  # Return only the top 10 suggestions
+        return jsonify([])
+    except Exception as e:
+        logging.error(f"Error occurred: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+
+
 mode = 'dev'
 
 if __name__ == "__main__":

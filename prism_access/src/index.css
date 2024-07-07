@@ -208,6 +208,8 @@ li:hover {
   background-color: #0056b3;
 }
 
+/* ------------------ Searchbar Styling ----------------- */
+
 .search-container{
   display: flex;
   gap: 40px;
@@ -316,14 +318,18 @@ li:hover {
 #start-date {
   margin: 0 11px;
   padding: 10px 50px;
-}
+}  
 
 .searchbar-container label {
   margin-right: 15px;
   font-weight: 600;
   color: rgb(51, 51, 51);
   font-size: 18px;
-}
+}  
+
+
+
+/* ------------------ Result table Styling ----------------- */
 
 .results {
   display: flex;
@@ -332,7 +338,7 @@ li:hover {
   justify-content: center;
   margin: 20px;
   font-size: 14px;
-}
+}  
 
 /* Container for the results table to enable scrolling */
 .results-table-container {
@@ -351,12 +357,12 @@ li:hover {
   /* width: 70%;  */
   margin-bottom: 40px; /* Increased bottom margin */
   position: relative;
-}
+}  
 
 .results-table {
   margin: 20px 40px;
   border-collapse: collapse;
-}
+}  
 
 .results-table th,
 .results-table td {
@@ -367,19 +373,19 @@ li:hover {
   /* flex-basis: 300px; */
   /* text-align: justify; */
   text-wrap: normal;
-}
+}  
 
 .results-table th {
   background-color: rgb(68, 105, 184);
   color: white; /* Optional: to make the text readable */
-}
+}  
 
 
 /* Change the background color of all data columns to blue */
 .results-table td {
   background-color: #ebf5ff;
   color: black; /* Optional: to ensure text is readable */
-}
+}  
 
 
 .table-cell {
@@ -389,17 +395,17 @@ li:hover {
     cursor: pointer;
     max-width: 200px; /* Adjust this value as needed */
     position: relative;
-  }
+  }  
   
   .table-cell.expanded {
     white-space: normal;
     overflow: visible;
     max-width: none;
-  }
+  }  
   
   .table-cell .full-text {
     display: none;
-  }
+  }  
   
   /* .table-cell.expanded .full-text {
     display: block;
@@ -408,8 +414,11 @@ li:hover {
     border: 1px solid #ccc;
     padding: 10px;
     z-index: 1;
-} */
-
+  } */      
+  
+  
+  
+  /* ------------------ Visualization Styling ----------------- */
 
 
 .visualizations-container {
@@ -427,45 +436,47 @@ li:hover {
   width: 90%; /* Adjusted width for Card */
   margin-bottom: 40px; /* Increased bottom margin */
   position: relative;
-}
+}  
 
 /* Donut chart container styling */
 .visualization.donut-chart {
   width: 25%; /* 25% of the space */
   padding: 20px;
   box-sizing: border-box;
-}
+}    
 
 /* Bar chart container styling */
 .visualization.bar-chart {
   width: 70%; /* 75% of the space */
   padding: 20px;
   box-sizing: border-box;
-}
+}  
 
 /* Ensures image fills container */
 .visualization img {
   width: 100%;
-}
+}  
 
 .country-details-table {
   width: 100%;
   margin-top: 12px;
   border-collapse: collapse;
-}
+}  
 
 .country-details-table td {
   padding: 10px;
   border: 1.5px thin #ddd;
   text-align: center;
-}
+}  
 
 .country-details-table a,
 .country-details-table div {
   text-decoration: none;
   color: #0073e6;
   font-weight: 600;
-}
+}  
+
+/* ------------------ Footer Styling ----------------- */
 
 .footer {
   display: flex;
@@ -490,6 +501,9 @@ li:hover {
   font-size: 14px;
   color: #555;
 }
+
+
+/* ------------------ Clinical Styling ----------------- */
 
 .clinical-container {
   display: flex;
