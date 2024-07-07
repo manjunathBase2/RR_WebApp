@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+
+import React from 'react';
 
 function Resulttable({ results }) {
-    const [expandedCells, setExpandedCells] = useState({});
-
     console.log("Results in Resulttable:", results);
 
     // Check if results is not defined or not an array
@@ -16,15 +15,7 @@ function Resulttable({ results }) {
     }
 
     // Assuming results[0] exists and contains all necessary columns
-    const columns = Object.keys(results[0]);
-
-    const toggleExpand = (rowIndex, columnIndex) => {
-        const cellKey = `${rowIndex}-${columnIndex}`;
-        setExpandedCells(prevState => ({
-            ...prevState,
-            [cellKey]: !prevState[cellKey],
-        }));
-    };
+    const columns = results[0] ? Object.keys(results[0]) : [];
 
     return (
         <div className="results-table-container">
@@ -40,20 +31,13 @@ function Resulttable({ results }) {
                     {results.map((row, rowIndex) => (
                         <tr key={rowIndex}>
                             {columns.map((column, columnIndex) => (
-                                <td
-                                    key={columnIndex}
-                                    className={`table-cell ${expandedCells[`${rowIndex}-${columnIndex}`] ? 'expanded' : ''}`}
-                                    onClick={() => toggleExpand(rowIndex, columnIndex)}
-                                >
+                                <td key={columnIndex}>
                                     {column === 'Source of truth' && row[column] ? (
                                         <a href={row[column]} target="_blank" rel="noopener noreferrer">
                                             {row[column]}
                                         </a>
                                     ) : (
-                                        <>
-                                            <span className="ellipsis-text">{row[column] !== null ? row[column] : '-'}</span>
-                                            <span className="full-text">{row[column] !== null ? row[column] : '-'}</span>
-                                        </>
+                                        row[column] !== null ? row[column] : '-'
                                     )}
                                 </td>
                             ))}

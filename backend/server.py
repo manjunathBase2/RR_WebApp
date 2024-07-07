@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 import pandas as pd
 from flask_cors import CORS
@@ -11,13 +10,18 @@ import io
 import base64
 import numpy as np
 from waitress import serve
+from collections import OrderedDict
 
 # app = Flask(__name__)
 app = Flask(__name__, static_folder="../client/build", static_url_path="/")
+app.json.sort_keys = False
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow CORS for all origins on all routes
 
 # Set up logging
 logging.basicConfig(level=logging.DEBUG)
+
+# Set default font family for Matplotlib
+matplotlib.rcParams['font.family'] = 'Arial'
 
 # Function to load data from Excel file
 def load_data(file_path):
@@ -70,8 +74,10 @@ def filter_data(df, column_name, search_term, start_date, end_date):
     df = df.drop(columns=['Date of decision'])
     df = df.dropna(axis=1, how='all')  # Remove columns with all missing values
     df = df.where(pd.notnull(df), None)  # Replace NaN with None
+
+    result = [OrderedDict(zip(df.columns, row)) for row in df.values]
+
     
-    result = df.to_dict(orient='records')
     # Determine the status column
     st = ''
     if "Market Authorization Status" in df.columns:
@@ -184,8 +190,7 @@ def filter_clinical_trials(df, column_name, search_term):
         df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False)]
     df = df.dropna(axis=1, how='all')  # Remove columns with all missing values
     df = df.where(pd.notnull(df), None)  # Replace NaN with None
-    
-    result = df.to_dict(orient='records')
+    result = [OrderedDict(zip(df.columns, row)) for row in df.values]
     return result
 
 # Route to handle POST requests for data filtering
@@ -247,8 +252,6 @@ def filter_clinical_trials_route():
     column_name = data.get('column_name', '')
     search_term = data.get('search_term', '')
 
-
-    
     try:
         df = load_clinical_trials_data()
         results = filter_clinical_trials(df, column_name, search_term)
@@ -260,7 +263,6 @@ def filter_clinical_trials_route():
 mode = 'dev'
 
 if __name__ == "__main__":
-    
     if mode == 'dev':
         app.run(debug=True)
     else:
