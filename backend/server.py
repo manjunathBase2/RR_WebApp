@@ -287,7 +287,7 @@ def autosuggest():
 
 
 
-mode = 'prod'
+mode = 'dev'
 
 if __name__ == "__main__":
     if mode == 'dev':
