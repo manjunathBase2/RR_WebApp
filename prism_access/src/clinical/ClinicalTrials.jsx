@@ -34,7 +34,7 @@ function ClinicalTrials() {
     return (
         <div className='clinical-container'>
             <div className="header-container">
-                <img src={Roche_logo} className="logo" alt="Logo" />
+                {/* <img src={Roche_logo} className="logo" alt="Logo" /> */}
                 <Header2 />
                 <nav>
                     <ul>
@@ -89,7 +89,7 @@ function ClinicalTrials() {
                     <p></p>
                 )}
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }
