@@ -11,10 +11,11 @@ import base64
 import numpy as np
 from waitress import serve
 from collections import OrderedDict
-
+from flask_caching import Cache
 # app = Flask(__name__)
 app = Flask(__name__, static_folder="../client/build", static_url_path="/")
 app.json.sort_keys = False
+cache = Cache(app, config={'CACHE_TYPE': 'simple'}) 
 CORS(app, resources={r"/*": {"origins": "*"}})  # Allow CORS for all origins on all routes
 
 # Set up logging
@@ -24,6 +25,7 @@ logging.basicConfig(level=logging.DEBUG)
 matplotlib.rcParams['font.family'] = 'Arial'
 
 # Function to load data from Excel file
+@cache.cached(timeout=300, key_prefix='data')
 def load_data(file_path):
     path = os.getcwd()
     if file_path == '1':
@@ -118,6 +120,18 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         plt.close(fig)
 
         # Generate the bar chart
+        def wrap_text(text, max_length=30):
+            lines = []
+            while len(text) > max_length:
+                # Find the last space within the max_length limit
+                wrap_index = text.rfind(' ', 0, max_length)
+                if wrap_index == -1:
+                    # No spaces found; break at max_length
+                    wrap_index = max_length
+                lines.append(text[:wrap_index])
+                text = text[wrap_index:].strip()
+            lines.append(text)
+            return '\n'.join(lines)
         op=''
         if "Therapeutic Area" in df.columns and not df["Therapeutic Area"].isnull().all():
             op = "Therapeutic Area"
@@ -136,7 +150,7 @@ def filter_data(df, column_name, search_term, start_date, end_date):
             therapeutic_areas = list(nested_dict.keys())
             therapeutic_areas_sorted = sorted(therapeutic_areas, key=lambda area: sum(nested_dict[area].values()), reverse=False)
                 
-            fig, ax = plt.subplots(figsize=(4,3))
+            fig, ax = plt.subplots(figsize=(6,3))
             bar_width = 0.25
             bar_positions = np.arange(len(therapeutic_areas_sorted))
 
@@ -144,12 +158,14 @@ def filter_data(df, column_name, search_term, start_date, end_date):
                 counts_sorted = [nested_dict[area].get(status, 0) for area in therapeutic_areas_sorted]
                 bars = ax.barh(bar_positions - bar_width / 2 + i * bar_width, counts_sorted, height=bar_width, label=status, color=status_color_map.get(status, 'gray'))
                 for bar, value in zip(bars, counts_sorted):
-                    ax.annotate(f'{value}', xy=(bar.get_width(), bar.get_y() + bar.get_height() / 2), 
-                                xytext=(5, 0), textcoords='offset points',
-                                ha='left', va='center', fontsize=10)
+                    if value>0:
+                        ax.annotate(f'{value}', xy=(bar.get_width(), bar.get_y() + bar.get_height() / 2), 
+                                    xytext=(5, 0), textcoords='offset points',
+                                    ha='left', va='center', fontsize=10)
 
+            wrapped_labels = [wrap_text(label, max_length=50) for label in therapeutic_areas_sorted]
             ax.set_yticks(bar_positions)
-            ax.set_yticklabels(therapeutic_areas_sorted, fontsize=10)
+            ax.set_yticklabels(wrapped_labels, fontsize=10)
             ax.legend(fontsize=10, loc='upper center', bbox_to_anchor=(0.5, -0.15), fancybox=True, shadow=True, ncol=1)
             ax.tick_params(axis='x', which='major', labelsize=10, length=3)
             ax.set_xlabel('Count', fontsize=10)
@@ -279,12 +295,15 @@ def autosuggest():
         if query and column_name in df.columns:
             results = df[df[column_name].astype(str).str.contains(query, case=False, na=False)]
             suggestions = results[column_name].dropna().unique().tolist()
-            return jsonify(suggestions[:10])  # Return only the top 10 suggestions
+            
+            # Filter suggestions that start with the query
+            suggestions_starting_with_query = [s for s in suggestions if s.lower().startswith(query.lower())]
+            
+            return jsonify(suggestions_starting_with_query[:10])  # Return only the top 10 suggestions starting with the query
         return jsonify([])
     except Exception as e:
         logging.error(f"Error occurred: {str(e)}")
-        return jsonify({'error': str(e)}), 500
-
+        return jsonify({'error':str(e)}),500
 
 
 mode = 'dev'
