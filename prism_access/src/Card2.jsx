@@ -3,6 +3,10 @@ import germanyImage from './assets/country_img/germany.png';
 import scotlandImage from './assets/country_img/scotland.png';
 import ukImage from './assets/country_img/uk.png'
 import australiaImage from './assets/country_img/australia.png';
+import franceImage from './assets/country_img/france.png';
+import canadaImage from './assets/country_img/canada.png';
+import spainImage from './assets/country_img/spain.png';
+import swedenImage from './assets/country_img/sweden.png';
 
 function Card2({ setSelectedCountry, setCardType }) {
   const [selectedCountry, setSelectedCountryLocal] = useState(null);
@@ -28,11 +32,21 @@ function Card2({ setSelectedCountry, setCardType }) {
         setRegionUrl('https://docs.google.com/document/d/1YkE6LTbmc9Stvv5FxuZtlqr_rL1GI_3qGfdTEAN4tS0/edit?usp=sharing');
         setReimBodyName('Pharmaceutical Benefits Scheme (PBS)');
         setReimBodyUrl('https://www.pbs.gov.au/industry/listing/procedure-guidance/files/Procedure-guidance-for-listing-medicines-on-the-Pharmaceutical-Benefits-Scheme-v2.5.pdf');
-      } else if(selectedCountry === 'A'){
+      } else if(selectedCountry === 'France'){
         setRegionUrl('');
         setReimBodyName('');
         setReimBodyUrl('');
-      } else if(selectedCountry === 'B'){
+      } else if(selectedCountry === 'Sweden'){
+        setRegionUrl('');
+        setReimBodyName('');
+        setReimBodyUrl('');
+      }
+      else if(selectedCountry === 'Spain'){
+        setRegionUrl('');
+        setReimBodyName('');
+        setReimBodyUrl('');
+      }
+      else if(selectedCountry === 'Canada'){
         setRegionUrl('');
         setReimBodyName('');
         setReimBodyUrl('');
@@ -48,11 +62,18 @@ function Card2({ setSelectedCountry, setCardType }) {
   const europeCountries = [
     { name: 'Germany', imgSrc: germanyImage },
     { name: 'Scotland', imgSrc: scotlandImage },
-    { name: 'UK', imgSrc: ukImage }
+    { name: 'UK', imgSrc: ukImage },
+    { name: 'Sweden', imgSrc: swedenImage},
+    { name: 'Spain', imgSrc: spainImage},
+    { name: 'France', imgSrc: franceImage},
   ];
 
   const australiaCountries = [
     { name: 'Australia', imgSrc: australiaImage },
+  ];
+
+  const northAmericaCountries = [
+    { name: 'Canada', imgSrc: canadaImage },
   ];
 
   const handleCountryClick = (countryName) => {
@@ -98,6 +119,10 @@ function Card2({ setSelectedCountry, setCardType }) {
             <h2 className='continent'>Australia</h2>
           </div>
           {renderCountries(australiaCountries)}
+          <div className="section-header">
+            <h2 className='continent'>North America</h2>
+          </div>
+          {renderCountries(northAmericaCountries)}
         </div>
       </div>
       {selectedCountry && (

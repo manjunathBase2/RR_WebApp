@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Autosuggest from 'react-autosuggest';
+import axios from 'axios';
 
 function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [searchType, setSearchType] = useState('Product Name');
@@ -11,6 +10,14 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [loading, setLoading] = useState(false);
     const [availableColumns, setAvailableColumns] = useState(["Product Name", "Active Substance", "Therapeutic Area"]); // Default options
     const [suggestions, setSuggestions] = useState([]);
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        fetch('/assets/combined_data.json')
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => console.error('Error fetching the JSON data:', error));
+    }, []);
 
     useEffect(() => {
         const fetchColumns = async () => {
@@ -37,6 +44,28 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                 filePath = "9";
             } else if (cardType === 'MA' && selectedCountry === 'UK') {
                 filePath = "10";
+            } else if (cardType === 'MA' && selectedCountry === 'France') {
+                filePath = "11";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'France') {
+                filePath = "12";
+            } else if (cardType === 'MA' && selectedCountry === 'Spain') {
+                filePath = "13";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'Spain') {
+                filePath = "14";
+            } else if (cardType === 'MA' && selectedCountry === 'Sweden') {
+                filePath = "15";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'Sweden') {
+                filePath = "16";
+            } else if (cardType === 'MA' && selectedCountry === 'Canada') {
+                filePath = "17";
+            } else if (cardType === 'Reimbursement' && selectedCountry === 'Canada') {
+                filePath = "18";
+            } else if (cardType === 'MA' && selectedCountry === 'South Korea') {
+                filePath = "19";
+            } else if (cardType === 'MA' && selectedCountry === 'Italy') {
+                filePath = "20";
+            } else if (cardType === 'MA' && selectedCountry === 'Brazil') {
+                filePath = "21";
             } else {
                 alert("Invalid card type.");
                 return;
@@ -63,41 +92,12 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
         setSearchQuery(newValue);
     };
 
-    const fetchSuggestions = async ({ value }) => {
-        if (!selectedCountry || !cardType) return;
-
-        let filePath;
-        // Map selectedCountry and cardType to filePath (same as above)
-        if (cardType === 'MA' && selectedCountry === 'Germany') {
-            filePath = "1";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Germany') {
-            filePath = "2";
-        } else if (cardType === 'MA' && selectedCountry === 'European Union') {
-            filePath = "3";
-        } else if (cardType === 'MA' && selectedCountry === 'USA') {
-            filePath = "4";
-        } else if (cardType === 'MA' && selectedCountry === 'Scotland') {
-            filePath = "5";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Scotland') {
-            filePath = "6";
-        } else if (cardType === 'MA' && selectedCountry === 'Australia') {
-            filePath = "7";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Australia') {
-            filePath = "8";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'UK') {
-            filePath = "9";
-        } else if (cardType === 'MA' && selectedCountry === 'UK') {
-            filePath = "10";
-        }
-
-        try {
-            const response = await axios.get('http://localhost:5000/autosuggest', {
-                params: { query: value, column_name: searchType, file_path: filePath }
-            });
-            setSuggestions(response.data);
-        } catch (error) {
-            console.error("Error fetching suggestions:", error);
-        }
+    const fetchSuggestions = ({ value }) => {
+        if (!data[searchType]) return;
+        const filteredSuggestions = data[searchType].filter(item =>
+            item.toLowerCase().includes(value.toLowerCase())
+        );
+        setSuggestions(filteredSuggestions);
     };
 
     const clearSuggestions = () => {
@@ -157,7 +157,29 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
             filePath = "9";
         } else if (cardType === 'MA' && selectedCountry === 'UK') {
             filePath = "10";
-        }else {
+        } else if (cardType === 'MA' && selectedCountry === 'France') {
+            filePath = "11";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'France') {
+            filePath = "12";
+        } else if (cardType === 'MA' && selectedCountry === 'Spain') {
+            filePath = "13";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Spain') {
+            filePath = "14";
+        } else if (cardType === 'MA' && selectedCountry === 'Sweden') {
+            filePath = "15";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Sweden') {
+            filePath = "16";
+        } else if (cardType === 'MA' && selectedCountry === 'Canada') {
+            filePath = "17";
+        } else if (cardType === 'Reimbursement' && selectedCountry === 'Canada') {
+            filePath = "18";
+        } else if (cardType === 'MA' && selectedCountry === 'South Korea') {
+            filePath = "19";
+        } else if (cardType === 'MA' && selectedCountry === 'Italy') {
+            filePath = "20";
+        } else if (cardType === 'MA' && selectedCountry === 'Brazil') {
+            filePath = "21";
+        } else {
             alert("Invalid card type.");
             setLoading(false);
             return;
@@ -188,9 +210,16 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
         }
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSearch();
+        }
+    };
+
     return (
         <>
-            <div className="searchbar-container">
+            <div className="searchbar-container" onKeyDown={handleKeyDown}>
                 <div className="searchbar-left">
                     <div>
                         <label>Select Criteria:</label>
@@ -244,7 +273,6 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                     </button>
                 </div>
             </div>
-
         </>
     );
 }

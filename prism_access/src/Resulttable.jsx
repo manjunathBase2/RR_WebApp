@@ -3,20 +3,31 @@ import React, { useState } from 'react';
 function Resulttable({ results }) {
     const [expandedCells, setExpandedCells] = useState({});
 
-    console.log("Results in Resulttable:", results);
+    const downloadCSV = () => {
+        if (!results || results.length === 0) return;
 
-    // Check if results is not defined or not an array
-    if (!results || !Array.isArray(results)) {
-        return <p>No results found.</p>;
-    }
+        const csvRows = [];
+        const headers = Object.keys(results[0]);
+        csvRows.push(headers.join(','));
 
-    // Check if results array is empty
-    if (results.length === 0) {
-        return <p>No results found.</p>;
-    }
+        for (const row of results) {
+            const values = headers.map(header => {
+                const value = row[header];
+                return value ? `"${String(value).replace(/"/g, '""')}"` : '';
+            });
+            csvRows.push(values.join(','));
+        }
 
-    // Assuming results[0] exists and contains all necessary columns
-    const columns = Object.keys(results[0]);
+        const csvString = csvRows.join('\n');
+        const blob = new Blob([csvString], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'results.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
 
     const toggleExpand = (rowIndex, columnIndex) => {
         const cellKey = `${rowIndex}-${columnIndex}`;
@@ -26,8 +37,17 @@ function Resulttable({ results }) {
         }));
     };
 
+    if (!results || !Array.isArray(results) || results.length === 0) {
+        return <p>No results found.</p>;
+    }
+
+    const columns = Object.keys(results[0]);
+
     return (
         <div className="results-table-container">
+            <button onClick={downloadCSV} className="download-button">
+                Download <i class="fa fa-download"></i>
+            </button>
             <table className="results-table">
                 <thead>
                     <tr>

@@ -34,7 +34,7 @@ function App() {
         <>
             <div className="container">
                 <div className="header-container">
-                    <img src={Roche_logo} className="logo" alt="Logo" />
+                    <img src={Roche_logo} className="logo" alt="Logo" /> 
                     <Header />
                     <nav>
                         <ul>

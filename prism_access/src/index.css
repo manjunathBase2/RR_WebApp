@@ -464,6 +464,21 @@ li:hover {
   .table-cell .full-text {
     display: none;
   }  
+
+  .download-button{
+    background-color: #fff;
+    color:  #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 200px;
+    text-align: center;
+  }
+  .download-button:hover{
+    color: #0056b3;
+  }
   
   /* .table-cell.expanded .full-text {
     display: block;
@@ -533,6 +548,8 @@ li:hover {
   color: #0073e6;
   font-weight: 600;
 }  
+
+
 
 /* ------------------ Footer Styling ----------------- */
 
@@ -610,3 +627,4 @@ li:hover {
     max-width: none;
     background-color: #f1f1f1; /* Optional: highlight the expanded cell */
 }
+

@@ -5,6 +5,14 @@ import ukImage from './assets/country_img/uk.png';
 import europeImage from './assets/country_img/europe.png';
 import usaImage from './assets/country_img/usa.png';
 import australiaImage from './assets/country_img/australia.png';
+import franceImage from './assets/country_img/france.png';
+import canadaImage from './assets/country_img/canada.png';
+import spainImage from './assets/country_img/spain.png';
+import swedenImage from './assets/country_img/sweden.png';
+import italyImage from './assets/country_img/italy.png';
+import brazilImage from './assets/country_img/brazil.png';
+import southkoreaImage from './assets/country_img/southkorea.png';
+
 
 function Card({ setSelectedCountry, setCardType }) {
   const [selectedCountry, setSelectedCountryLocal] = useState(null);
@@ -39,6 +47,41 @@ function Card({ setSelectedCountry, setCardType }) {
         setMaBodyName('FDA(Food and Drug Administration)');
         setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
       }
+      else if(selectedCountry==='France'){
+        setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
+        setMaBodyName('FDA(Food and Drug Administration)');
+        setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
+      }
+      else if(selectedCountry==="Spain"){
+        setCountryUrl("");
+        setMaBodyName("");
+        setMaBodyUrl("");
+      }
+      else if(selectedCountry==="South Korea"){
+        setCountryUrl("");
+        setMaBodyName("");
+        setMaBodyUrl("");
+      }
+      else if(selectedCountry==="Sweden"){
+        setCountryUrl("");
+        setMaBodyName("");
+        setMaBodyUrl("");
+      }
+      else if(selectedCountry==="Italy"){
+        setCountryUrl("");
+        setMaBodyName("");
+        setMaBodyUrl("");
+      }
+      else if(selectedCountry==="Canada"){
+        setCountryUrl("");
+        setMaBodyName("");
+        setMaBodyUrl("");
+      }
+      else if(selectedCountry==="Brazil"){
+        setCountryUrl("");
+        setMaBodyName("");
+        setMaBodyUrl("");
+      }
     } else {
       setCountryUrl('');
       setMaBodyName('');
@@ -51,20 +94,34 @@ function Card({ setSelectedCountry, setCardType }) {
     { name: 'Scotland', imgSrc: scotlandImage },
     { name: 'UK', imgSrc: ukImage },
     { name: 'European Union', imgSrc: europeImage },
+    { name: 'Sweden', imgSrc: swedenImage},
+    { name: 'Spain', imgSrc: spainImage},
+    { name: 'France', imgSrc: franceImage},
+    { name: 'Italy', imgSrc: italyImage},
   ];
 
   const northAmericaCountries = [
     { name: 'USA', imgSrc: usaImage },
+    { name: 'Canada', imgSrc: canadaImage },
+  ];
+
+  const southAmericaCountries = [
+    { name: 'Brazil', imgSrc: brazilImage },
   ];
 
   const australiaCountries = [
     { name: 'Australia', imgSrc: australiaImage },
   ];
 
+  const eastAsiaCountries = [
+    { name: 'South Korea', imgSrc: southkoreaImage },
+  ];
+
   const handleCountryClick = (countryName) => {
     setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("MA");
+    console.log(selectedCountry);
   };
 
   const clearSelection = () => {
@@ -104,12 +161,20 @@ function Card({ setSelectedCountry, setCardType }) {
             <h2 className='continent'>North America</h2>
           </div>
           {renderCountries(northAmericaCountries)}
+          <div className="section-header">
+            <h2 className='continent'>South America</h2>
+          </div>
+          {renderCountries(southAmericaCountries)}
         </div>
         <div className="section">
           <div className="section-header">
             <h2 className='continent'>Australia</h2>
           </div>
           {renderCountries(australiaCountries)}
+          <div className="section-header">
+            <h2 className='continent'>East Asia</h2>
+          </div>
+          {renderCountries(eastAsiaCountries)}
         </div>
       </div>
       {selectedCountry && (

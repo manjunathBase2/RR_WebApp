@@ -1,0 +1,612 @@
+Reset styles for HTML and body html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(194, 194, 194, 0.247);
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* Logo styling */
+.logo {
+  height: 80px;
+  position: absolute;
+  left: 48px;
+}
+
+/* Header container styling */
+.header-container {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  width: 90%;
+  margin: 20px auto;
+  justify-content: space-between; /* Center elements in the header */
+  position: relative;
+  text-align: center;
+}
+
+/* Title container styling */
+.title-container {
+  /* flex-grow: 1; */
+  /* align-self: flex-; */
+}
+
+/* Title styling */
+.title {
+  color: black;
+  margin-left: 200px; /* Remove default margins */
+  text-align: center;
+  font-size: 2.2em;
+}
+
+.navigation-link {
+  font-size: 1.5em;
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navigation-link:hover {
+  color: #0073e6;
+}
+
+/* Main container styling */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+}
+
+/* Cards wrapper styling */
+.cards-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  gap: 15px;
+  margin-bottom: 20px; /* Added margin to space between cards and search bar */
+}
+
+/* Individual card container styling */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 65%; /* Adjusted width for Card */
+  margin-bottom: 40px; /* Increased bottom margin */
+  position: relative; /* Ensure relative positioning for highlighting */
+}
+
+/* Adjusted width for Card2 */
+.card-container:nth-child(2) {
+  width: 40%;
+}
+
+/* Card title styling */
+.card-title {
+  text-align: center; /* Center the card title */
+  font-size: 20px; /* Optional: adjust font size */
+  font-weight: bold; /* Optional: make the title bold */
+  margin-bottom: 20px; /* Optional: adjust bottom margin */
+}
+
+/* Sections container styling */
+.sections-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Section styling */
+.section,
+.country-details-table {
+  flex: 1 0 auto;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  text-align: center; /* Center section headers */
+}
+
+/* Section header styling */
+.section-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* Unordered list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* List item styling */
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative; /* Relative positioning for border highlight */
+}
+
+/* List item image styling */
+li img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+/* Selected list item styling */
+li.selected {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+/* Selected list item pseudo-element styling */
+li.selected::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 2px solid #333; /* Highlight border color */
+  border-radius: 8px; /* Rounded corners */
+  z-index: -1; /* Behind content */
+}
+
+/* Hover state for list items */
+li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Continent header styling */
+.continent {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* Clear selection button styling */
+.clear-button {
+  background-color: #007bff;
+  color: #ffffff;
+  font-size: 14px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px; /* Increased margin to create space */
+  transition: background-color 0.3s;
+  align-self: center;
+}
+
+/* Hover state for clear selection button */
+.clear-button:hover {
+  background-color: #0056b3;
+}
+
+/* ------------------ Searchbar Styling ----------------- */
+
+.search-container{
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+.search-container-child{
+  max-width: fit-content;
+  align-self: center;
+  padding: 5px;
+}
+
+.searchbar-container {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 200px;
+  font-size: 18px;
+}
+
+.searchbar-left {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+  justify-content: left;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+.searchbar-right {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: flex-start;
+  justify-content: left;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+.searchbar-dropdown {
+  padding: 10px 35px;
+  margin: 10px 20px;
+  border: 1px solid #ddd;
+
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* width: 100%;  */
+  /* Adjust width as necessary */
+}
+
+.searchbar-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-right: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* width: auto; */
+}
+
+.searchbar-input-text {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-right: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 700px;
+}
+
+
+.searchbar-button-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: right;
+  margin-bottom: 40px;
+  margin-right: 150px;
+  margin-top: 50px;
+}
+
+.searchbar-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 200px;
+  text-align: center;
+}
+
+.searchbar-button:hover {
+  background-color: #0056b3;
+}
+
+#end-date {
+  margin: 0 16px;
+  padding: 10px 50px;
+}
+
+#start-date {
+  margin: 0 11px;
+  padding: 10px 50px;
+}  
+
+
+
+/* ------------------ Auto Suggest Styling ----------------- */
+
+
+.react-autosuggest__container {
+    position: relative;
+    min-width: 700px;
+}
+
+.react-autosuggest__input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Ensures padding is included in the total width */
+  }
+  
+  .react-autosuggest__suggestions-container {
+    font-size: 16px;
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    /* border: 1px solid #ccc; */
+    border-radius: 4px;
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Make suggestions container same width as input */
+    box-sizing: border-box; /* Ensures padding is included in the total width */
+}
+
+.react-autosuggest__suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.react-autosuggest__suggestion {
+    padding: 1px;
+    /* border-bottom: 1px solid #ccc; */
+    background-color: #f9f9f9;
+    cursor: pointer;
+    white-space: normal; /* Allows text to wrap */
+    word-wrap: break-word; /* Breaks long words to fit within the container */
+}
+
+.react-autosuggest__suggestion--highlighted {
+    background-color: #f9f9f9;
+}
+
+
+.suggestion-item {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ccc;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+/* ------------------ Result table Styling ----------------- */
+
+.results {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  font-size: 14px;
+}  
+
+/* Container for the results table to enable scrolling */
+.results-table-container {
+  display: flex;
+  max-height: 500px;
+  max-width: 70%;
+  min-width: 1300px;
+  flex-direction: column;
+  overflow-y: scroll; /* Enable vertical scrolling */
+  overflow-x: scroll;
+  border: 1px solid #ddd;
+  /* padding: 20px; */
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* width: 70%;  */
+  margin-bottom: 40px; /* Increased bottom margin */
+  position: relative;
+}  
+
+.results-table {
+  margin: 20px 40px;
+  border-collapse: collapse;
+}  
+
+.results-table th,
+.results-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  min-width: 200px;
+  /* max-width: 250px; */
+  /* flex-basis: 300px; */
+  /* text-align: justify; */
+  text-wrap: normal;
+}  
+
+.results-table th {
+  background-color: rgb(68, 105, 184);
+  color: white; /* Optional: to make the text readable */
+}  
+
+
+/* Change the background color of all data columns to blue */
+.results-table td {
+  background-color: #ebf5ff;
+  color: black; /* Optional: to ensure text is readable */
+}  
+
+
+.table-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    max-width: 200px; /* Adjust this value as needed */
+    position: relative;
+  }  
+  
+  .table-cell.expanded {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+  }  
+  
+  .table-cell .full-text {
+    display: none;
+  }  
+  
+  /* .table-cell.expanded .full-text {
+    display: block;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+  } */      
+  
+  
+  
+  /* ------------------ Visualization Styling ----------------- */
+
+
+.visualizations-container {
+  display: flex;
+  justify-content: space-around; /* Adjust as needed */
+  gap: 10px;
+  margin-top: 20px;
+  /* max-width: 1200px; */
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  padding: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Adjusted width for Card */
+  margin-bottom: 40px; /* Increased bottom margin */
+  position: relative;
+}  
+
+/* Donut chart container styling */
+.visualization.donut-chart {
+  width: 25%; /* 25% of the space */
+  padding: 20px;
+  box-sizing: border-box;
+}    
+
+/* Bar chart container styling */
+.visualization.bar-chart {
+  width: 70%; /* 75% of the space */
+  padding: 20px;
+  box-sizing: border-box;
+}  
+
+/* Ensures image fills container */
+.visualization img {
+  width: 100%;
+}  
+
+.country-details-table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}  
+
+.country-details-table td {
+  padding: 10px;
+  border: 1.5px thin #ddd;
+  text-align: center;
+}  
+
+.country-details-table a,
+.country-details-table div {
+  text-decoration: none;
+  color: #0073e6;
+  font-weight: 600;
+}  
+
+/* ------------------ Footer Styling ----------------- */
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  /* background-color: #efefef; */
+  /* border-top: 1px solid #e7e7e7; */
+  margin-top: 20px;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.footer-logo {
+  width: 50px;
+  /* margin-bottom: 10px; */
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+
+/* ------------------ Clinical Styling ----------------- */
+
+.clinical-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.clinical-container Footer{
+  align-content: end;
+  margin-top: 400px;
+}
+
+.results--container {
+  /* margin-left: 1000px; */
+  /* margin: 0px 1000px; */
+  /* align-self: auto */
+  display: flex;
+  justify-content: center;
+}
+
+.clinical-table-container{
+  max-width: 70vw;
+  max-height: 700px;
+}
+
+.clinical-search select,input,button {
+  font-size: 18px;
+}
+
+
+/* Add these styles to your index.css */
+.results-table td {
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+.results-table td.expanded {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+    background-color: #f1f1f1; /* Optional: highlight the expanded cell */
+}
