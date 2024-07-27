@@ -53,34 +53,39 @@ function Card({ setSelectedCountry, setCardType }) {
         setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
       }
       else if(selectedCountry==="Spain"){
-        setCountryUrl("");
-        setMaBodyName("");
-        setMaBodyUrl("");
+        setCountryUrl("https://docs.google.com/document/d/19ohXaL-tgW2iqNKqzDAVROat3LBdm3KSMTRl91OVC8A/edit?usp=sharing");
+        setMaBodyName("Agency of Medicines and Medical Devices (AEMPS)");
+        setMaBodyUrl("https://www.aemps.gob.es/informa-en/the-spanish-agency-of-medicines-and-medical-devices-aemps-recommends-using-voluntary-harmonisation-procedure-before-the-official-submission-of-a-multi-state-ct-application/?lang=en");
       }
       else if(selectedCountry==="South Korea"){
-        setCountryUrl("");
-        setMaBodyName("");
-        setMaBodyUrl("");
+        setCountryUrl("https://docs.google.com/document/d/1UDx1I7nCxGlbBCQncFC3r38RF0FWzm-UG-UEo9Qp0Qo/edit?usp=sharing");
+        setMaBodyName("Ministry of Food and Drug Safety ( MFDS )");
+        setMaBodyUrl("https://www.mfds.go.kr/eng/index.do");
       }
       else if(selectedCountry==="Sweden"){
-        setCountryUrl("");
-        setMaBodyName("");
-        setMaBodyUrl("");
+        setCountryUrl("https://docs.google.com/document/d/1sBvbpvPpdymsoXxDVk3q4vsKKJ5SL8sSTpzP9HZ4b48/edit?usp=sharing");
+        setMaBodyName(" Swedish Medical Products Agency (MPA)");
+        setMaBodyUrl("https://www.lakemedelsverket.se/en");
       }
       else if(selectedCountry==="Italy"){
-        setCountryUrl("");
-        setMaBodyName("");
-        setMaBodyUrl("");
+        setCountryUrl("https://docs.google.com/document/d/1Zjs7z5d8cUcCmkXj7Vjcm7mJMWWQ56023bdh4uHtAqY/edit");
+        setMaBodyName("AIFA (Italian Medicines Agency)");
+        setMaBodyUrl("https://www.aifa.gov.it/en/home");
+      }
+      else if(selectedCountry==="France"){
+        setCountryUrl("https://docs.google.com/document/d/1tWU7RaP51x7uEIaSgmfkukVF97bBomobyrOsU9SvzX4/edit");
+        setMaBodyName("National Agency for Medicines and Health Products Safety (ANSM)");
+        setMaBodyUrl("https://ansm.sante.fr/");
       }
       else if(selectedCountry==="Canada"){
-        setCountryUrl("");
-        setMaBodyName("");
-        setMaBodyUrl("");
+        setCountryUrl("https://docs.google.com/document/d/1h2qolf5joqDC2cB7BGymKJyJlQ0cYO-hUhft6SsD0VU/edit");
+        setMaBodyName("Health Products and Food Branch (HPFB)");
+        setMaBodyUrl("https://www.canada.ca/en/health-canada.html");
       }
       else if(selectedCountry==="Brazil"){
-        setCountryUrl("");
-        setMaBodyName("");
-        setMaBodyUrl("");
+        setCountryUrl("https://docs.google.com/document/d/1mbVgeUhJtpOKy_vxhodrrQOjibPKmtId-3EXRwXhxDs/edit");
+        setMaBodyName("Brazilian Health Regulatory Agency (Anvisa)");
+        setMaBodyUrl("https://consultas.anvisa.gov.br/#/");
       }
     } else {
       setCountryUrl('');

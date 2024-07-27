@@ -33,23 +33,23 @@ function Card2({ setSelectedCountry, setCardType }) {
         setReimBodyName('Pharmaceutical Benefits Scheme (PBS)');
         setReimBodyUrl('https://www.pbs.gov.au/industry/listing/procedure-guidance/files/Procedure-guidance-for-listing-medicines-on-the-Pharmaceutical-Benefits-Scheme-v2.5.pdf');
       } else if(selectedCountry === 'France'){
-        setRegionUrl('');
-        setReimBodyName('');
-        setReimBodyUrl('');
+        setRegionUrl('https://docs.google.com/document/d/16C8E2sJNfclzZZ7DUVIRtUCcMb9bRUdd5gN1Gq5x7a4/edit');
+        setReimBodyName('Haute Autorité de Santé (HAS)');
+        setReimBodyUrl('https://www.has-sante.fr/');
       } else if(selectedCountry === 'Sweden'){
-        setRegionUrl('');
-        setReimBodyName('');
-        setReimBodyUrl('');
+        setRegionUrl('https://docs.google.com/document/d/1FAFLDHjtjMMCHSJgAYM4ksH7wW3fpPDq4-6DKJfHwwk/edit');
+        setReimBodyName(' Dental and Pharmaceutical Benefits Agency (TLV)');
+        setReimBodyUrl('https://www.tlv.se/beslut/sok-priser-och-beslut-i-databasen.html');
       }
       else if(selectedCountry === 'Spain'){
-        setRegionUrl('');
-        setReimBodyName('');
-        setReimBodyUrl('');
+        setRegionUrl('https://docs.google.com/document/d/1auhpaFNl8vojS_athl7tlAtiTVwLEWa00q5M5S4GsHw/edit');
+        setReimBodyName('Spanish Agency of Medicines and Medical Devices (AEMPS)');
+        setReimBodyUrl('https://www.aemps.gob.es/medicamentos-de-uso-humano/informes-de%20posicionamiento-terapeutico/#');
       }
       else if(selectedCountry === 'Canada'){
-        setRegionUrl('');
-        setReimBodyName('');
-        setReimBodyUrl('');
+        setRegionUrl('https://docs.google.com/document/d/1NMSDSPgpXfXfrwNCjZrvXI-2TxTMPQksaecPwR1-WIo/edit');
+        setReimBodyName("Canada's Drug Agency (CADTH");
+        setReimBodyUrl('https://www.cadth.ca/reimbursement-review-reports');
       }
     } else {
       setRegionUrl('');
