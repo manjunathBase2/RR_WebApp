@@ -13,7 +13,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch('/assets/combined_data.json')
+        fetch('./combined_data.json')
             .then(response => response.json())
             .then(data => setData(data))
             .catch(error => console.error('Error fetching the JSON data:', error));
