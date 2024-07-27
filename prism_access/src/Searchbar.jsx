@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
+import combinedData from './assets/combined_data.json'; // Adjust the path as necessary
 
 function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [searchType, setSearchType] = useState('Product Name');
     const [searchQuery, setSearchQuery] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [loading, setLoading] = useState(false);
     const [availableColumns, setAvailableColumns] = useState(["Product Name", "Active Substance", "Therapeutic Area"]); // Default options
-    const [suggestions, setSuggestions] = useState([]);
-    const [data, setData] = useState({});
+    // const [suggestions, setSuggestions] = useState([]);
+    // const [data, setData] = useState({});
 
-    useEffect(() => {
-        fetch('./combined_data.json')
-            .then(response => response.json())
-            .then(data => setData(data))
-            .catch(error => console.error('Error fetching the JSON data:', error));
-    }, []);
+    // useEffect(() => {
+    //     fetch('./combined_data.json')
+    //         .then(response => response.json())
+    //         .then(data => setData(data))
+    //         .catch(error => console.error('Error fetching the JSON data:', error));
+    // }, []);
 
     useEffect(() => {
         const fetchColumns = async () => {
@@ -86,37 +88,29 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const handleSearchTypeChange = (e) => {
         setSearchType(e.target.value);
         setSearchQuery('');
-    };
-
-    const handleSearchQueryChange = (e, { newValue }) => {
-        setSearchQuery(newValue);
-    };
-
-    const fetchSuggestions = ({ value }) => {
-        if (!data[searchType]) return;
-        const filteredSuggestions = data[searchType].filter(item =>
-            item.toLowerCase().includes(value.toLowerCase())
-        );
-        setSuggestions(filteredSuggestions);
-    };
-
-    const clearSuggestions = () => {
         setSuggestions([]);
     };
 
-    const getSuggestionValue = suggestion => suggestion;
+    const getFilteredSuggestions = (query) => {
+        if (!query) return [];
+        return combinedData[searchType]?.filter(item => item.toLowerCase().includes(query.toLowerCase())) || [];
+    };
 
-    const renderSuggestion = suggestion => (
+    const onSuggestionsFetchRequested = ({ value }) => {
+        setSuggestions(getFilteredSuggestions(value));
+    };
+
+    const onSuggestionsClearRequested = () => {
+        setSuggestions([]);
+    };
+
+    const getSuggestionValue = (suggestion) => suggestion;
+
+    const renderSuggestion = (suggestion) => (
         <div className="suggestion-item">
             {suggestion}
         </div>
     );
-
-    const inputProps = {
-        placeholder: `Search by ${searchType}`,
-        value: searchQuery,
-        onChange: handleSearchQueryChange
-    };
 
     const handleSearch = async () => {
         if (!selectedCountry) {
@@ -216,6 +210,12 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
             handleSearch();
         }
     };
+    const inputProps = {
+        placeholder: 'Enter search query',
+        value: searchQuery,
+        onChange: (e, { newValue }) => setSearchQuery(newValue),
+        onKeyDown: handleKeyDown
+    };
 
     return (
         <>
@@ -235,8 +235,8 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                     </div>
                         <Autosuggest
                             suggestions={suggestions}
-                            onSuggestionsFetchRequested={fetchSuggestions}
-                            onSuggestionsClearRequested={clearSuggestions}
+                            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                            onSuggestionsClearRequested={onSuggestionsClearRequested}
                             getSuggestionValue={getSuggestionValue}
                             renderSuggestion={renderSuggestion}
                             inputProps={inputProps}
