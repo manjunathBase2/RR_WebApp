@@ -74,7 +74,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
             }
 
             try {
-                const response = await axios.post('http://localhost:5000/get_columns', { file_path: filePath });
+                const response = await axios.post('http://10.146.77.154:5000/get_columns', { file_path: filePath });
                 console.log("Fetched columns:", response.data.columns);  // Log the response for debugging
                 setAvailableColumns(response.data.columns);
             } catch (error) {
@@ -184,7 +184,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
         console.log("Search Data:", searchData);
 
         try {
-            const response = await axios.post('http://localhost:5000/filter', searchData);
+            const response = await axios.post('http://10.146.77.154:5000/filter', searchData);
             console.log("Response Data:", response.data);
 
             if (response.data.results.length === 0) {

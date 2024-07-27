@@ -13,7 +13,7 @@ function ClinicalTrials() {
 
     const handleFilter = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/clinical/`, {
+            const response = await axios.post(`http://10.146.77.154:5000/clinical/`, {
                 column_name: columnName,
                 search_term: searchTerm
             });

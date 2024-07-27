@@ -26,47 +26,47 @@ matplotlib.rcParams['font.family'] = 'Arial'
 def load_data(file_path):
     path = os.getcwd()
     if file_path == '1':
-        file_path = r'data\Germany_MA.xlsx'
+        file_path = r'data/Germany_MA.xlsx'
     elif file_path == '2':
-        file_path = r'data\Germany_Reimbursement.xlsx'
+        file_path = r'data/Germany_Reimbursement.xlsx'
     elif file_path == '3':
-        file_path = r'data\Europe_MA.xlsx'
+        file_path = r'data/Europe_MA.xlsx'
     elif file_path == '4':
-        file_path = r'data\USA_MA.xlsx'
+        file_path = r'data/USA_MA.xlsx'
     elif file_path == '5':
-        file_path = r'data\Scotland_MA.xlsx'
+        file_path = r'data/Scotland_MA.xlsx'
     elif file_path == '6':
-        file_path = r'data\Scotland_Reimbursement.xlsx'
+        file_path = r'data/Scotland_Reimbursement.xlsx'
     elif file_path == '7':
-        file_path = r'data\Australia_MA.xlsx'
+        file_path = r'data/Australia_MA.xlsx'
     elif file_path == '8':
-        file_path = r'data\Australia_Reimbursement.xlsx'
+        file_path = r'data/Australia_Reimbursement.xlsx'
     elif file_path == "9":
-        file_path = r'data\UK_Reimbursement.xlsx'
+        file_path = r'data/UK_Reimbursement.xlsx'
     elif file_path == "10":
-        file_path = r'data\UK_MA.xlsx'
+        file_path = r'data/UK_MA.xlsx'
     elif file_path == "11":
-        file_path = r'data\France_MA.xlsx'
+        file_path = r'data/France_MA.xlsx'
     elif file_path == "12":
-        file_path = r'data\France_Reimbursement.xlsx'
+        file_path = r'data/France_Reimbursement.xlsx'
     elif file_path == "13":
-        file_path = r'data\Spain_MA.xlsx'
+        file_path = r'data/Spain_MA.xlsx'
     elif file_path == "14":
-        file_path = r'data\Spain_Reimbursement.xlsx'
+        file_path = r'data/Spain_Reimbursement.xlsx'
     elif file_path == "15":
-        file_path = r'data\Sweden_MA.xlsx'
+        file_path = r'data/Sweden_MA.xlsx'
     elif file_path == "16":
-        file_path = r'data\Sweden_Reimbursement.xlsx'
+        file_path = r'data/Sweden_Reimbursement.xlsx'
     elif file_path == "17":
-        file_path = r'data\Canada_MA.xlsx'
+        file_path = r'data/Canada_MA.xlsx'
     elif file_path == "18":
-        file_path = r'data\Canada_Reimbursement.xlsx'
+        file_path = r'data/Canada_Reimbursement.xlsx'
     elif file_path == "19":
-        file_path = r'data\South Korea_MA.xlsx'
+        file_path = r'data/South Korea_MA.xlsx'
     elif file_path == "20":
-        file_path = r'data\Italy_MA.xlsx'
+        file_path = r'data/Italy_MA.xlsx'
     else:
-        file_path = r'data\Brazil_MA.xlsx'
+        file_path = r'data/Brazil_MA.xlsx'
     file_path = os.path.join(path, file_path)
     df = pd.read_excel(file_path)
     df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce')
@@ -92,7 +92,7 @@ def filter_data(df, column_name, search_term, start_date, end_date):
 
     logging.debug(f"Filtered data: {df.head()}")
 
-    df = df.drop(columns=['Date of decision'])
+    # df = df.drop(columns=['Date of decision'])
     df = df.dropna(axis=1, how='all')  # Remove columns with all missing values
     df = df.where(pd.notnull(df), None)  # Replace NaN with None
 
@@ -325,7 +325,7 @@ def autosuggest():
         return jsonify({'error':str(e)}),500
 
 
-mode = 'dev'
+mode = 'prod'
 
 if __name__ == "__main__":
     if mode == 'dev':
