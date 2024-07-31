@@ -12,15 +12,6 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     const [endDate, setEndDate] = useState('');
     const [loading, setLoading] = useState(false);
     const [availableColumns, setAvailableColumns] = useState(["Product Name", "Active Substance", "Therapeutic Area"]); // Default options
-    // const [suggestions, setSuggestions] = useState([]);
-    // const [data, setData] = useState({});
-
-    // useEffect(() => {
-    //     fetch('./combined_data.json')
-    //         .then(response => response.json())
-    //         .then(data => setData(data))
-    //         .catch(error => console.error('Error fetching the JSON data:', error));
-    // }, []);
 
     useEffect(() => {
         const fetchColumns = () => {
