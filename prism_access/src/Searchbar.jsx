@@ -79,8 +79,9 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     };
 
     const getFilteredSuggestions = (query) => {
-        if (!query) return [];
-        return combinedData[searchType]?.filter(item => item.toLowerCase().includes(query.toLowerCase())) || [];
+        if (!query || !selectedCountry || !cardType) return [];
+        const data = combinedData[selectedCountry]?.[cardType]?.[searchType] || [];
+        return data.filter(item => item.toLowerCase().includes(query.toLowerCase()));
     };
 
     const onSuggestionsFetchRequested = ({ value }) => {
