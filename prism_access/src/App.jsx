@@ -43,8 +43,8 @@ function App() {
                     </nav>
                 </div>
                 <div className="cards-wrapper">
-                    <Card setSelectedCountry={setSelectedCountry} setCardType={setCardType} />
-                    <Card2 setSelectedCountry={setSelectedCountry} setCardType={setCardType} />
+                    <Card setSelectedCountry={setSelectedCountry} cardType={cardType} setCardType={setCardType} />
+                    <Card2 setSelectedCountry={setSelectedCountry} cardType={cardType} setCardType={setCardType} />
                 </div>
                 <div className='search'>
                     <Searchbar selectedCountry={selectedCountry} cardType={cardType} onResultsFetched={handleResultsFetched} />

@@ -14,7 +14,7 @@ import brazilImage from './assets/country_img/brazil.png';
 import southkoreaImage from './assets/country_img/southkorea.png';
 
 
-function Card({ setSelectedCountry, setCardType }) {
+function Card({ setSelectedCountry, cardType, setCardType}) {
   const [selectedCountry, setSelectedCountryLocal] = useState(null);
   const [countryUrl, setCountryUrl] = useState('');
   const [maBodyName, setMaBodyName] = useState('');
@@ -126,6 +126,7 @@ function Card({ setSelectedCountry, setCardType }) {
     setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("MA");
+    cardType("MA");
     console.log(selectedCountry);
   };
 
@@ -139,7 +140,7 @@ function Card({ setSelectedCountry, setCardType }) {
       {countries.map((country) => (
         <li
           key={country.name}
-          className={selectedCountry === country.name ? 'selected' : ''}
+          className={ ((selectedCountry === country.name) && (cardType === 'MA') )? 'selected' : ''}
           onClick={() => handleCountryClick(country.name)}
         >
           <img src={country.imgSrc} alt={country.name} />
@@ -182,7 +183,7 @@ function Card({ setSelectedCountry, setCardType }) {
           {renderCountries(eastAsiaCountries)}
         </div>
       </div>
-      {selectedCountry && (
+      {selectedCountry && (cardType === 'MA') && (
         <table className="country-details-table">
                   <tbody>
                     <tr>
@@ -203,9 +204,9 @@ function Card({ setSelectedCountry, setCardType }) {
                   </tbody>
                 </table>
       )}
-      {selectedCountry && (
+      {/* {selectedCountry && (cardType === 'MA') && (
         <button className="clear-button" onClick={clearSelection}>Clear Selection</button>
-      )}
+      )} */}
     </div>
   );
 }
