@@ -205,6 +205,12 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
         setStartDate('');
         setEndDate('');
         setSuggestions([]);
+        onResultsFetched({
+            results: 0,
+            visualization1: null,
+            visualization2: null
+        });
+        
     };
     const inputProps = {
         placeholder: 'Enter search query',
