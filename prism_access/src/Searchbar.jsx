@@ -198,6 +198,14 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
             handleSearch();
         }
     };
+
+    const handleClear = () => {
+        setSearchType('Product Name');
+        setSearchQuery('');
+        setStartDate('');
+        setEndDate('');
+        setSuggestions([]);
+    };
     const inputProps = {
         placeholder: 'Enter search query',
         value: searchQuery,
@@ -258,6 +266,11 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                 <div className="searchbar-button">
                     <button onClick={handleSearch} className="searchbar-button" disabled={loading}>
                         {loading ? "Searching..." : "Launch Search"}
+                    </button>
+                </div>
+                <div className="searchbar-button">
+                    <button onClick={handleClear} className="searchbar-button">
+                        Clear Search
                     </button>
                 </div>
             </div>

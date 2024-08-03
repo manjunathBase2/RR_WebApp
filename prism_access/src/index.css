@@ -293,7 +293,7 @@ li:hover {
   gap: 20px;
   justify-content: right;
   margin-bottom: 40px;
-  margin-right: 150px;
+  /* margin-right: 150px; */
   margin-top: 50px;
 }
 
@@ -506,9 +506,10 @@ li:hover {
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 90%; /* Adjusted width for Card */
+  width: 100%; /* Adjusted width for Card */
   margin-bottom: 40px; /* Increased bottom margin */
-  position: relative;
+  /* margin-left: 30px; */
+  /* position: relative; */
 }  
 
 /* Donut chart container styling */
@@ -522,6 +523,7 @@ li:hover {
 .visualization.bar-chart {
   width: 70%; /* 75% of the space */
   padding: 20px;
+  margin-right: 50px;
   box-sizing: border-box;
 }  
 

@@ -88,7 +88,7 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         df = df[df['Date of decision'] <= end_date]
 
     if column_name and search_term:
-        df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False)]
+        df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False, regex=False)]
 
     logging.debug(f"Filtered data: {df.head()}")
 
@@ -227,7 +227,7 @@ def load_clinical_trials_data():
 # Function to filter clinical trials data based on criteria
 def filter_clinical_trials(df, column_name, search_term):
     if column_name and search_term:
-        df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False)]
+        df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False, regex=False)]
     df = df.dropna(axis=1, how='all')  # Remove columns with all missing values
     df = df.where(pd.notnull(df), None)  # Replace NaN with None
     result = [OrderedDict(zip(df.columns, row)) for row in df.values]
@@ -312,7 +312,7 @@ def autosuggest():
     try:
         df = load_data(file_path)
         if query and column_name in df.columns:
-            results = df[df[column_name].astype(str).str.contains(query, case=False, na=False)]
+            results = df[df[column_name].astype(str).str.contains(query, case=False, na=False, regex=False)]
             suggestions = results[column_name].dropna().unique().tolist()
             
             # Filter suggestions that start with the query
