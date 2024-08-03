@@ -28,6 +28,9 @@ Prism access alternative built using React and Flask
 2. Install Node.js dependencies and others:
    ```bash
    npm install
+3. Install react-autosuggest library
+   ```bash
+   npm i react-autosuggest
 3. Start the frontend development server:
    ```bash
    npm run dev
