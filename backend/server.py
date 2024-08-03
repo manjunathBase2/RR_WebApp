@@ -11,6 +11,11 @@ import base64
 import numpy as np
 from waitress import serve
 from collections import OrderedDict
+
+# Set logging level for matplotlib.font_manager to WARNING
+logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
+
+
 # app = Flask(__name__)
 app = Flask(__name__, static_folder="../client/build", static_url_path="/")
 app.json.sort_keys = False
@@ -69,13 +74,16 @@ def load_data(file_path):
         file_path = r'data/Brazil_MA.xlsx'
     file_path = os.path.join(path, file_path)
     df = pd.read_excel(file_path)
-    df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce')
+    df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce', format='mixed')
     return df
 
 # Function to filter data based on criteria
 def filter_data(df, column_name, search_term, start_date, end_date):
     logging.debug(f"Start date: {start_date}, End date: {end_date}, Column: {column_name}, Term: {search_term}")
 
+    #remove the rows with empty 'Date of decision' column
+    if start_date != None or end_date != None :
+        df = df.dropna(subset=['Date of decision'])
     if start_date and end_date:
         start_date = pd.to_datetime(start_date, errors='coerce')
         end_date = pd.to_datetime(end_date, errors='coerce')
