@@ -325,7 +325,7 @@ def autosuggest():
         return jsonify({'error':str(e)}),500
 
 
-mode = 'dev'
+mode = 'prod'
 
 if __name__ == "__main__":
     if mode == 'dev':
