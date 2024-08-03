@@ -366,20 +366,20 @@ li:hover {
 .react-autosuggest__suggestion {
     padding: 1px;
     /* border-bottom: 1px solid #ccc; */
-    background-color: #f9f9f9;
+    background-color:  rgba(0, 0, 0, 0);
     cursor: pointer;
     white-space: normal; /* Allows text to wrap */
     word-wrap: break-word; /* Breaks long words to fit within the container */
 }
 
 .react-autosuggest__suggestion--highlighted {
-    background-color: #f9f9f9;
+    background-color: #d3d3d3;
 }
 
 
 .suggestion-item {
     padding: 10px;
-    background-color: #f9f9f9;
+    background-color:  rgba(0, 0, 0, 0);
     border-bottom: 1px solid #ccc;
 }
 
