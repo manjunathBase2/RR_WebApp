@@ -91,7 +91,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
         }
 
         try {
-            const response = await axios.get('http://localhost:5000/autosuggest', {
+            const response = await axios.get('http://10.146.70.236:5000/autosuggest', {
                 params: { query: value, column_name: searchType, file_path: filePath }
             });
             setSuggestions(response.data);
