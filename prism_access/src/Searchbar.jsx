@@ -4,7 +4,7 @@ import axios from 'axios';
 import combinedData from './assets/combined_data.json'; // Adjust the path as necessary
 import columnsData from './assets/columns.json'; // Adjust the path as necessary
 
-function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
+function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
     const [searchType, setSearchType] = useState('Product Name');
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
@@ -15,62 +15,68 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
 
     useEffect(() => {
         const fetchColumns = () => {
-            if (!selectedCountry || !cardType) return;
+            if (!selectedCountries.length || !cardType) return;
 
+            let columns = [];
+
+            selectedCountries.forEach((country) => {
             let fileKey;
-            if (cardType === 'MA' && selectedCountry === 'Germany') {
+            if (cardType === 'MA' && country === 'Germany') {
                 fileKey = "Germany_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'Germany') {
+            } else if (cardType === 'Reimbursement' && country === 'Germany') {
                 fileKey = "Germany_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'European Union') {
+            } else if (cardType === 'MA' && country === 'European Union') {
                 fileKey = "Europe_MA.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'USA') {
+            } else if (cardType === 'MA' && country === 'USA') {
                 fileKey = "USA_MA.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Scotland') {
+            } else if (cardType === 'MA' && country === 'Scotland') {
                 fileKey = "Scotland_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'Scotland') {
+            } else if (cardType === 'Reimbursement' && country === 'Scotland') {
                 fileKey = "Scotland_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Australia') {
+            } else if (cardType === 'MA' && country === 'Australia') {
                 fileKey = "Australia_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'Australia') {
+            } else if (cardType === 'Reimbursement' && country === 'Australia') {
                 fileKey = "Australia_Reimbursement.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'UK') {
+            } else if (cardType === 'Reimbursement' && country === 'UK') {
                 fileKey = "UK_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'UK') {
+            } else if (cardType === 'MA' && country === 'UK') {
                 fileKey = "UK_MA.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'France') {
+            } else if (cardType === 'MA' && country === 'France') {
                 fileKey = "France_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'France') {
+            } else if (cardType === 'Reimbursement' && country === 'France') {
                 fileKey = "France_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Spain') {
+            } else if (cardType === 'MA' && country === 'Spain') {
                 fileKey = "Spain_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'Spain') {
+            } else if (cardType === 'Reimbursement' && country === 'Spain') {
                 fileKey = "Spain_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Sweden') {
+            } else if (cardType === 'MA' && country === 'Sweden') {
                 fileKey = "Sweden_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'Sweden') {
+            } else if (cardType === 'Reimbursement' && country === 'Sweden') {
                 fileKey = "Sweden_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Canada') {
+            } else if (cardType === 'MA' && country === 'Canada') {
                 fileKey = "Canada_MA.xlsx";
-            } else if (cardType === 'Reimbursement' && selectedCountry === 'Canada') {
+            } else if (cardType === 'Reimbursement' && country === 'Canada') {
                 fileKey = "Canada_Reimbursement.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'South Korea') {
+            } else if (cardType === 'MA' && country === 'South Korea') {
                 fileKey = "South Korea_MA.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Italy') {
+            } else if (cardType === 'MA' && country === 'Italy') {
                 fileKey = "Italy_MA.xlsx";
-            } else if (cardType === 'MA' && selectedCountry === 'Brazil') {
+            } else if (cardType === 'MA' && country === 'Brazil') {
                 fileKey = "Brazil_MA.xlsx";
             } else {
                 alert("Invalid card type.");
                 return;
             }
 
-            const columns = columnsData[fileKey] || [];
-            setAvailableColumns(columns);
+                const countryColumns = columnsData[fileKey] || [];
+                columns = [...columns, ...countryColumns];
+            });
+
+            setAvailableColumns([...new Set(columns)]); // Remove duplicates
         };
 
         fetchColumns();
-    }, [selectedCountry, cardType]);
+    }, [selectedCountries, cardType]);
 
     const handleSearchTypeChange = (e) => {
         setSearchType(e.target.value);
@@ -79,10 +85,17 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     };
 
     const getFilteredSuggestions = (query) => {
-        if (!query || !selectedCountry || !cardType) return [];
-        const data = combinedData[selectedCountry]?.[cardType]?.[searchType] || [];
-        return data.filter(item => item.toLowerCase().includes(query.toLowerCase()));
+        if (!query || !selectedCountries.length || !cardType) return [];
+        let filteredSuggestions = [];
+
+        selectedCountries.forEach((country) => {
+            const data = combinedData[country]?.[cardType]?.[searchType] || [];
+            filteredSuggestions = [...filteredSuggestions, ...data.filter(item => item.toLowerCase().includes(query.toLowerCase()))];
+        });
+
+        return [...new Set(filteredSuggestions)]; // Remove duplicates
     };
+
 
     const onSuggestionsFetchRequested = ({ value }) => {
         setSuggestions(getFilteredSuggestions(value));
@@ -101,7 +114,7 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
     );
 
     const handleSearch = async () => {
-        if (!selectedCountry) {
+        if (!selectedCountries.length) {
             alert("Please select a country.");
             return;
         }
@@ -117,57 +130,60 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
             searchData.column_name = searchType;
             searchData.search_term = searchQuery;
         }
-
+        let filePaths = [];
+        selectedCountries.forEach((country) => {
         let filePath;
-        if (cardType === 'MA' && selectedCountry === 'Germany') {
+        if (cardType === 'MA' && country === 'Germany') {
             filePath = "1";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Germany') {
+        } else if (cardType === 'Reimbursement' && country === 'Germany') {
             filePath = "2";
-        } else if (cardType === 'MA' && selectedCountry === 'European Union') {
+        } else if (cardType === 'MA' && country === 'European Union') {
             filePath = "3";
-        } else if (cardType === 'MA' && selectedCountry === 'USA') {
+        } else if (cardType === 'MA' && country === 'USA') {
             filePath = "4";
-        } else if (cardType === 'MA' && selectedCountry === 'Scotland') {
+        } else if (cardType === 'MA' && country === 'Scotland') {
             filePath = "5";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Scotland') {
+        } else if (cardType === 'Reimbursement' && country === 'Scotland') {
             filePath = "6";
-        } else if (cardType === 'MA' && selectedCountry === 'Australia') {
+        } else if (cardType === 'MA' && country === 'Australia') {
             filePath = "7";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Australia') {
+        } else if (cardType === 'Reimbursement' && country === 'Australia') {
             filePath = "8";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'UK') {
+        } else if (cardType === 'Reimbursement' && country === 'UK') {
             filePath = "9";
-        } else if (cardType === 'MA' && selectedCountry === 'UK') {
+        } else if (cardType === 'MA' && country === 'UK') {
             filePath = "10";
-        } else if (cardType === 'MA' && selectedCountry === 'France') {
+        } else if (cardType === 'MA' && country === 'France') {
             filePath = "11";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'France') {
+        } else if (cardType === 'Reimbursement' && country === 'France') {
             filePath = "12";
-        } else if (cardType === 'MA' && selectedCountry === 'Spain') {
+        } else if (cardType === 'MA' && country === 'Spain') {
             filePath = "13";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Spain') {
+        } else if (cardType === 'Reimbursement' && country === 'Spain') {
             filePath = "14";
-        } else if (cardType === 'MA' && selectedCountry === 'Sweden') {
+        } else if (cardType === 'MA' && country === 'Sweden') {
             filePath = "15";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Sweden') {
+        } else if (cardType === 'Reimbursement' && country === 'Sweden') {
             filePath = "16";
-        } else if (cardType === 'MA' && selectedCountry === 'Canada') {
+        } else if (cardType === 'MA' && country === 'Canada') {
             filePath = "17";
-        } else if (cardType === 'Reimbursement' && selectedCountry === 'Canada') {
+        } else if (cardType === 'Reimbursement' && country === 'Canada') {
             filePath = "18";
-        } else if (cardType === 'MA' && selectedCountry === 'South Korea') {
+        } else if (cardType === 'MA' && country === 'South Korea') {
             filePath = "19";
-        } else if (cardType === 'MA' && selectedCountry === 'Italy') {
+        } else if (cardType === 'MA' && country === 'Italy') {
             filePath = "20";
-        } else if (cardType === 'MA' && selectedCountry === 'Brazil') {
+        } else if (cardType === 'MA' && country === 'Brazil') {
             filePath = "21";
         } else {
             alert("Invalid card type.");
             setLoading(false);
             return;
         }
+        filePaths.push(filePath);
+    });
 
-        searchData.file_path = filePath;
+        searchData.file_paths = filePaths;
 
         console.log("Search Data:", searchData);
 
@@ -235,8 +251,10 @@ function Searchbar({ onResultsFetched, selectedCountry, cardType }) {
                             onChange={handleSearchTypeChange}
                             className="searchbar-dropdown"
                         >
-                            {availableColumns.map((column) => (
-                                <option key={column} value={column}>{column}</option>
+                            {availableColumns.map((column, index) => (
+                                <option key={index} value={column}>
+                                    {column}
+                                </option>
                             ))}
                         </select>
                     </div>

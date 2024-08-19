@@ -28,54 +28,99 @@ logging.basicConfig(level=logging.DEBUG)
 matplotlib.rcParams['font.family'] = 'Arial'
 
 # Function to load data from Excel file
-def load_data(file_path):
+# def load_data(file_path):
+#     path = os.getcwd()
+#     if file_path == '1':
+#         file_path = r'data/Germany_MA.xlsx'
+#     elif file_path == '2':
+#         file_path = r'data/Germany_Reimbursement.xlsx'
+#     elif file_path == '3':
+#         file_path = r'data/Europe_MA.xlsx'
+#     elif file_path == '4':
+#         file_path = r'data/USA_MA.xlsx'
+#     elif file_path == '5':
+#         file_path = r'data/Scotland_MA.xlsx'
+#     elif file_path == '6':
+#         file_path = r'data/Scotland_Reimbursement.xlsx'
+#     elif file_path == '7':
+#         file_path = r'data/Australia_MA.xlsx'
+#     elif file_path == '8':
+#         file_path = r'data/Australia_Reimbursement.xlsx'
+#     elif file_path == "9":
+#         file_path = r'data/UK_Reimbursement.xlsx'
+#     elif file_path == "10":
+#         file_path = r'data/UK_MA.xlsx'
+#     elif file_path == "11":
+#         file_path = r'data/France_MA.xlsx'
+#     elif file_path == "12":
+#         file_path = r'data/France_Reimbursement.xlsx'
+#     elif file_path == "13":
+#         file_path = r'data/Spain_MA.xlsx'
+#     elif file_path == "14":
+#         file_path = r'data/Spain_Reimbursement.xlsx'
+#     elif file_path == "15":
+#         file_path = r'data/Sweden_MA.xlsx'
+#     elif file_path == "16":
+#         file_path = r'data/Sweden_Reimbursement.xlsx'
+#     elif file_path == "17":
+#         file_path = r'data/Canada_MA.xlsx'
+#     elif file_path == "18":
+#         file_path = r'data/Canada_Reimbursement.xlsx'
+#     elif file_path == "19":
+#         file_path = r'data/South Korea_MA.xlsx'
+#     elif file_path == "20":
+#         file_path = r'data/Italy_MA.xlsx'
+#     else:
+#         file_path = r'data/Brazil_MA.xlsx'
+#     file_path = os.path.join(path, file_path)
+#     df = pd.read_excel(file_path)
+#     df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce', format='mixed')
+#     return df
+
+
+# Function to load data from multiple Excel files
+def load_data(file_paths):
     path = os.getcwd()
-    if file_path == '1':
-        file_path = r'data/Germany_MA.xlsx'
-    elif file_path == '2':
-        file_path = r'data/Germany_Reimbursement.xlsx'
-    elif file_path == '3':
-        file_path = r'data/Europe_MA.xlsx'
-    elif file_path == '4':
-        file_path = r'data/USA_MA.xlsx'
-    elif file_path == '5':
-        file_path = r'data/Scotland_MA.xlsx'
-    elif file_path == '6':
-        file_path = r'data/Scotland_Reimbursement.xlsx'
-    elif file_path == '7':
-        file_path = r'data/Australia_MA.xlsx'
-    elif file_path == '8':
-        file_path = r'data/Australia_Reimbursement.xlsx'
-    elif file_path == "9":
-        file_path = r'data/UK_Reimbursement.xlsx'
-    elif file_path == "10":
-        file_path = r'data/UK_MA.xlsx'
-    elif file_path == "11":
-        file_path = r'data/France_MA.xlsx'
-    elif file_path == "12":
-        file_path = r'data/France_Reimbursement.xlsx'
-    elif file_path == "13":
-        file_path = r'data/Spain_MA.xlsx'
-    elif file_path == "14":
-        file_path = r'data/Spain_Reimbursement.xlsx'
-    elif file_path == "15":
-        file_path = r'data/Sweden_MA.xlsx'
-    elif file_path == "16":
-        file_path = r'data/Sweden_Reimbursement.xlsx'
-    elif file_path == "17":
-        file_path = r'data/Canada_MA.xlsx'
-    elif file_path == "18":
-        file_path = r'data/Canada_Reimbursement.xlsx'
-    elif file_path == "19":
-        file_path = r'data/South Korea_MA.xlsx'
-    elif file_path == "20":
-        file_path = r'data/Italy_MA.xlsx'
-    else:
-        file_path = r'data/Brazil_MA.xlsx'
-    file_path = os.path.join(path, file_path)
-    df = pd.read_excel(file_path)
-    df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce', format='mixed')
-    return df
+    data_frames = []
+    
+    file_mapping = {
+        '1': 'Germany_MA.xlsx',
+        '2': 'Germany_Reimbursement.xlsx',
+        '3': 'Europe_MA.xlsx',
+        '4': 'USA_MA.xlsx',
+        '5': 'Scotland_MA.xlsx',
+        '6': 'Scotland_Reimbursement.xlsx',
+        '7': 'Australia_MA.xlsx',
+        '8': 'Australia_Reimbursement.xlsx',
+        '9': 'UK_Reimbursement.xlsx',
+        '10': 'UK_MA.xlsx',
+        '11': 'France_MA.xlsx',
+        '12': 'France_Reimbursement.xlsx',
+        '13': 'Spain_MA.xlsx',
+        '14': 'Spain_Reimbursement.xlsx',
+        '15': 'Sweden_MA.xlsx',
+        '16': 'Sweden_Reimbursement.xlsx',
+        '17': 'Canada_MA.xlsx',
+        '18': 'Canada_Reimbursement.xlsx',
+        '19': 'South Korea_MA.xlsx',
+        '20': 'Italy_MA.xlsx',
+        '21': 'Brazil_MA.xlsx'
+    }
+    
+    for file_id in file_paths:
+        file_name = file_mapping.get(file_id)
+        if file_name:
+            file_path = os.path.join(path, 'data', file_name)
+            df = pd.read_excel(file_path)
+            df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce', format='mixed')
+            data_frames.append(df)
+        else:
+            logging.warning(f"No file mapping found for ID: {file_id}")
+    
+    # Combine all DataFrames
+    combined_df = pd.concat(data_frames, ignore_index=True)
+    return combined_df
+
 
 # Function to filter data based on criteria
 def filter_data(df, column_name, search_term, start_date, end_date):
@@ -226,7 +271,7 @@ def filter_data(df, column_name, search_term, start_date, end_date):
 
 def load_clinical_trials_data():
     path = os.getcwd()
-    file_path = r'data\Clinical_Trials.xlsx'
+    file_path = r'data/Clinical_Trials.xlsx'
     file_path = os.path.join(path, file_path)
     df = pd.read_excel(file_path)
     # df['StartDate'] = pd.to_datetime(df['Start Date'], errors='coerce')
@@ -253,17 +298,17 @@ def filter_data_route():
         return '', 200, headers
     
     data = request.get_json()
-    file_path = data.get('file_path')
+    file_paths = data.get('file_paths')
     column_name = data.get('column_name', '')
     search_term = data.get('search_term', '')
     start_date = data.get('start_date')
     end_date = data.get('end_date')
 
-    if not file_path:
+    if not file_paths: 
         return jsonify([])  # Return an empty list if no file path is provided
 
     try:
-        df = load_data(file_path)
+        df = load_data(file_paths)
         results = filter_data(df, column_name, search_term, start_date, end_date)
         return jsonify(results)
     except Exception as e:
