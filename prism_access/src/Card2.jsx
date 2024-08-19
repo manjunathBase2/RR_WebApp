@@ -146,7 +146,7 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
       <div className="card-title">
         <h2>Reimbursement Details</h2>
       </div>
-        <div>
+        <div className="buttons-container">
           <button onClick={selectAllCountries}>Select All</button>
           <button onClick={deselectAllCountries}>Deselect All</button>
         </div>
