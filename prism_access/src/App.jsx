@@ -9,16 +9,27 @@ import Footer from './Footer.jsx';
 import Roche_logo from "./assets/Roche_Logo.png"
 
 function App() {
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountriesMA, setSelectedCountriesMA] = useState([]);
+    const [selectedCountriesReimbursement, setSelectedCountriesReimbursement] = useState([]);
     const [cardType, setCardType] = useState(null);
     const [results, setResults] = useState([]);
     const [visualization1, setVisualization1] = useState('');
     const [visualization2, setVisualization2] = useState('');
 
-    const handleCountrySelect = (country, type) => {
-        setSelectedCountry(country);
-        setCardType(type);
+
+    const handleMASelection = (countries) => {
+        setSelectedCountriesMA(countries);
+        setSelectedCountriesReimbursement([]); // Clear Reimbursement selections
+        setCardType("MA");
     };
+
+    const handleReimbursementSelection = (countries) => {
+        setSelectedCountriesReimbursement(countries);
+        setSelectedCountriesMA([]); // Clear MA selections
+        setCardType("Reimbursement");
+    };
+
+
     const handleResultsFetched = (data) => {
         console.log("Data fetched:", data);
         setResults(data.results);
@@ -30,6 +41,8 @@ function App() {
         console.log("Results state updated:", results);  // Log state update for results
     }, [results]);
 
+    const selectedCountries = [...new Set([...selectedCountriesMA, ...selectedCountriesReimbursement])];
+    
     return (
         <>
             <div className="container">
@@ -43,11 +56,21 @@ function App() {
                     </nav>
                 </div>
                 <div className="cards-wrapper">
-                    <Card setSelectedCountry={setSelectedCountry} cardType={cardType} setCardType={setCardType} />
-                    <Card2 setSelectedCountry={setSelectedCountry} cardType={cardType} setCardType={setCardType} />
+                    <Card
+                        selectedCountries={selectedCountriesMA}
+                        setSelectedCountries={handleMASelection}
+                        cardType={cardType}
+                        setCardType={setCardType}
+                    />
+                    <Card2
+                        selectedCountries={selectedCountriesReimbursement}
+                        setSelectedCountries={handleReimbursementSelection}
+                        cardType={cardType}
+                        setCardType={setCardType}
+                    />
                 </div>
                 <div className='search'>
-                    <Searchbar selectedCountry={selectedCountry} cardType={cardType} onResultsFetched={handleResultsFetched} />
+                    <Searchbar selectedCountries={selectedCountries} cardType={cardType} onResultsFetched={handleResultsFetched} />
                 </div>
                 <>
                     {(visualization1 || visualization2) && (

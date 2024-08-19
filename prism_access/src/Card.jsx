@@ -14,8 +14,8 @@ import brazilImage from './assets/country_img/brazil.png';
 import southkoreaImage from './assets/country_img/southkorea.png';
 
 
-function Card({ setSelectedCountry, cardType, setCardType}) {
-  const [selectedCountry, setSelectedCountryLocal] = useState(null);
+function Card({ selectedCountries, setSelectedCountries, cardType, setCardType}) {
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [countryUrl, setCountryUrl] = useState('');
   const [maBodyName, setMaBodyName] = useState('');
   const [maBodyUrl, setMaBodyUrl] = useState('');
@@ -44,13 +44,13 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
         setMaBodyUrl('https://www.tga.gov.au/sites/default/files/prescription-medicines-registration-process.pdf');
       } else if(selectedCountry === 'USA'){
         setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
-        setMaBodyName('FDA(Food and Drug Administration)');
+        setMaBodyName('Food and Drug Administration (FDA)');
         setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
       }
       else if(selectedCountry==='France'){
         setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
-        setMaBodyName('FDA(Food and Drug Administration)');
-        setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
+        setMaBodyName('French National Agency for Medicines and Health Products Safety (ANSM)');
+        setMaBodyUrl('https://docs.google.com/document/d/1tWU7RaP51x7uEIaSgmfkukVF97bBomobyrOsU9SvzX4/edit#heading=h.4st7ushemtrd');
       }
       else if(selectedCountry==="Spain"){
         setCountryUrl("https://docs.google.com/document/d/19ohXaL-tgW2iqNKqzDAVROat3LBdm3KSMTRl91OVC8A/edit?usp=sharing");
@@ -122,16 +122,42 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
     { name: 'South Korea', imgSrc: southkoreaImage },
   ];
 
+
+  const handleCountryToggle = (countryName) => {
+    let newSelection;
+    if (selectedCountries.includes(countryName)) {
+      newSelection = selectedCountries.filter((name) => name !== countryName);
+    } else {
+      newSelection = [...selectedCountries, countryName];
+    }
+    setSelectedCountries(newSelection);
+  };
+
+  const selectAllCountries = () => {
+    const allCountries = [
+      ...europeCountries,
+      ...northAmericaCountries,
+      ...southAmericaCountries,
+      ...australiaCountries,
+      ...eastAsiaCountries,
+    ].map((country) => country.name);
+    setSelectedCountries(allCountries);
+    setCardType("MA");
+  };
+
+  const deselectAllCountries = () => {
+    setSelectedCountries([]);
+    setSelectedCountry(null);
+  };
+
   const handleCountryClick = (countryName) => {
-    setSelectedCountryLocal(countryName);
+    // setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("MA");
-    cardType("MA");
     console.log(selectedCountry);
   };
 
   const clearSelection = () => {
-    setSelectedCountryLocal(null);
     setSelectedCountry(null);
   };
 
@@ -140,9 +166,19 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
       {countries.map((country) => (
         <li
           key={country.name}
-          className={ ((selectedCountry === country.name) && (cardType === 'MA') )? 'selected' : ''}
-          onClick={() => handleCountryClick(country.name)}
+          className={((selectedCountry === country.name) && (cardType === 'MA') )? 'selected' : ''}
+          onClick={() => {
+            handleCountryToggle(country.name);
+            handleCountryClick(country.name);
+          }
+        }
         >
+          <input
+            type="checkbox"
+            checked={selectedCountries.includes(country.name)}
+            onChange={() => handleCountryToggle(country.name)}
+            onClick={(e) => e.stopPropagation()} // Prevents the <li> onClick from firing when clicking directly on the checkbox
+          />
           <img src={country.imgSrc} alt={country.name} />
           {country.name}
         </li>
@@ -154,6 +190,10 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
     <div className="card-container">
       <div className="card-title">
         <h2>Market Authorization Details</h2>
+      </div>
+      <div className="buttons-container">
+        <button onClick={selectAllCountries}>Select All</button>
+        <button onClick={deselectAllCountries}>Deselect All</button>
       </div>
       <div className="sections-container">
         <div className="section">
