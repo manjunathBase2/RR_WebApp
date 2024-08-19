@@ -9,6 +9,7 @@ import spainImage from './assets/country_img/spain.png';
 import swedenImage from './assets/country_img/sweden.png';
 
 function Card2({ setSelectedCountry, cardType, setCardType }) {
+  const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedCountry, setSelectedCountryLocal] = useState(null);
   const [regionUrl, setRegionUrl] = useState('');
   const [reimBodyName, setReimBodyName] = useState('');
@@ -76,11 +77,40 @@ function Card2({ setSelectedCountry, cardType, setCardType }) {
     { name: 'Canada', imgSrc: canadaImage },
   ];
 
+  const handleCountryToggle = (countryName) => {
+    if (selectedCountries.includes(countryName)) {
+      setSelectedCountries(selectedCountries.filter((name) => name !== countryName));
+    } else {
+      setSelectedCountries([...selectedCountries, countryName]);
+    }
+    // setSelectedCountry(selectedCountries);
+    setCardType("Reimbursement");
+  };
+
+  const selectAllCountries = () => {
+    const allCountries = [
+      ...europeCountries,
+      ...northAmericaCountries,
+      ...australiaCountries,
+    ].map((country) => country.name);
+    setSelectedCountries(allCountries);
+    // setSelectedCountry(allCountries);
+    setCardType("Reimbursement");
+  };
+
+  const deselectAllCountries = () => {
+    setSelectedCountries([]);
+    setSelectedCountryLocal(null);
+    setSelectedCountry(null);
+  };
+
   const handleCountryClick = (countryName) => {
     setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("Reimbursement"); // set card type to "Reimbursement"
-  };
+    cardType("Reimbursement");
+    console.log(selectedCountry);
+};
 
   const clearSelection = () => {
     setSelectedCountryLocal(null);
@@ -92,9 +122,19 @@ function Card2({ setSelectedCountry, cardType, setCardType }) {
       {countries.map((country) => (
         <li
           key={country.name}
-          className={(( selectedCountry === country.name ) && (cardType === 'Reimbursement')) ? 'selected' : ''}
-          onClick={() => handleCountryClick(country.name)}
+          className={((selectedCountry === country.name) && (cardType === 'Reimbursement')) ? 'selected' : ''}
+          onClick={() => {
+            handleCountryToggle(country.name);
+            handleCountryClick(country.name);
+          }
+          }
         >
+          <input
+            type="checkbox"
+            checked={selectedCountries.includes(country.name)}
+            onChange={() => handleCountryToggle(country.name)}
+            onClick={(e) => e.stopPropagation()} // Prevents the <li> onClick from firing when clicking directly on the checkbox
+          />
           <img src={country.imgSrc} alt={country.name} />
           {country.name}
         </li>
@@ -107,6 +147,10 @@ function Card2({ setSelectedCountry, cardType, setCardType }) {
       <div className="card-title">
         <h2>Reimbursement Details</h2>
       </div>
+        <div>
+          <button onClick={selectAllCountries}>Select All</button>
+          <button onClick={deselectAllCountries}>Deselect All</button>
+        </div>
       <div className="sections-container">
         <div className="section">
           <div className="section-header">

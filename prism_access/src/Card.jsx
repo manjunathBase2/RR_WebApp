@@ -15,6 +15,7 @@ import southkoreaImage from './assets/country_img/southkorea.png';
 
 
 function Card({ setSelectedCountry, cardType, setCardType}) {
+  const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectedCountry, setSelectedCountryLocal] = useState(null);
   const [countryUrl, setCountryUrl] = useState('');
   const [maBodyName, setMaBodyName] = useState('');
@@ -122,6 +123,37 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
     { name: 'South Korea', imgSrc: southkoreaImage },
   ];
 
+
+
+  const handleCountryToggle = (countryName) => {
+    if (selectedCountries.includes(countryName)) {
+      setSelectedCountries(selectedCountries.filter((name) => name !== countryName));
+    } else {
+      setSelectedCountries([...selectedCountries, countryName]);
+    }
+    // setSelectedCountry(selectedCountries);
+    setCardType("MA");
+  };
+
+  const selectAllCountries = () => {
+    const allCountries = [
+      ...europeCountries,
+      ...northAmericaCountries,
+      ...southAmericaCountries,
+      ...australiaCountries,
+      ...eastAsiaCountries,
+    ].map((country) => country.name);
+    setSelectedCountries(allCountries);
+    // setSelectedCountry(allCountries);
+    setCardType("MA");
+  };
+
+  const deselectAllCountries = () => {
+    setSelectedCountries([]);
+    setSelectedCountryLocal(null);
+    setSelectedCountry(null);
+  };
+
   const handleCountryClick = (countryName) => {
     setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
@@ -140,9 +172,19 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
       {countries.map((country) => (
         <li
           key={country.name}
-          className={ ((selectedCountry === country.name) && (cardType === 'MA') )? 'selected' : ''}
-          onClick={() => handleCountryClick(country.name)}
+          className={((selectedCountry === country.name) && (cardType === 'MA') )? 'selected' : ''}
+          onClick={() => {
+            handleCountryToggle(country.name);
+            handleCountryClick(country.name);
+          }
+        }
         >
+          <input
+            type="checkbox"
+            checked={selectedCountries.includes(country.name)}
+            onChange={() => handleCountryToggle(country.name)}
+            onClick={(e) => e.stopPropagation()} // Prevents the <li> onClick from firing when clicking directly on the checkbox
+          />
           <img src={country.imgSrc} alt={country.name} />
           {country.name}
         </li>
@@ -154,6 +196,10 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
     <div className="card-container">
       <div className="card-title">
         <h2>Market Authorization Details</h2>
+      </div>
+      <div>
+        <button onClick={selectAllCountries}>Select All</button>
+        <button onClick={deselectAllCountries}>Deselect All</button>
       </div>
       <div className="sections-container">
         <div className="section">
