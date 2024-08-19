@@ -14,7 +14,7 @@ import brazilImage from './assets/country_img/brazil.png';
 import southkoreaImage from './assets/country_img/southkorea.png';
 
 
-function Card({ selectedCountries,setSelectedCountries, cardType, setCardType}) {
+function Card({ selectedCountries, setSelectedCountries, cardType, setCardType}) {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [countryUrl, setCountryUrl] = useState('');
   const [maBodyName, setMaBodyName] = useState('');
