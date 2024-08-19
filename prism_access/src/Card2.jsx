@@ -8,9 +8,8 @@ import canadaImage from './assets/country_img/canada.png';
 import spainImage from './assets/country_img/spain.png';
 import swedenImage from './assets/country_img/sweden.png';
 
-function Card2({ setSelectedCountry, cardType, setCardType }) {
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedCountry, setSelectedCountryLocal] = useState(null);
+function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType }) {
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [regionUrl, setRegionUrl] = useState('');
   const [reimBodyName, setReimBodyName] = useState('');
   const [reimBodyUrl, setReimBodyUrl] = useState('');
@@ -100,12 +99,12 @@ function Card2({ setSelectedCountry, cardType, setCardType }) {
 
   const deselectAllCountries = () => {
     setSelectedCountries([]);
-    setSelectedCountryLocal(null);
+    // setSelectedCountryLocal(null);
     setSelectedCountry(null);
   };
 
   const handleCountryClick = (countryName) => {
-    setSelectedCountryLocal(countryName);
+    // setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("Reimbursement"); // set card type to "Reimbursement"
     cardType("Reimbursement");
@@ -113,7 +112,7 @@ function Card2({ setSelectedCountry, cardType, setCardType }) {
 };
 
   const clearSelection = () => {
-    setSelectedCountryLocal(null);
+    // setSelectedCountryLocal(null);
     setSelectedCountry(null);
   };
 

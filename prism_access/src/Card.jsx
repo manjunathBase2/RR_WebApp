@@ -14,9 +14,8 @@ import brazilImage from './assets/country_img/brazil.png';
 import southkoreaImage from './assets/country_img/southkorea.png';
 
 
-function Card({ setSelectedCountry, cardType, setCardType}) {
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedCountry, setSelectedCountryLocal] = useState(null);
+function Card({ selectedCountries,setSelectedCountries, cardType, setCardType}) {
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [countryUrl, setCountryUrl] = useState('');
   const [maBodyName, setMaBodyName] = useState('');
   const [maBodyUrl, setMaBodyUrl] = useState('');
@@ -144,26 +143,23 @@ function Card({ setSelectedCountry, cardType, setCardType}) {
       ...eastAsiaCountries,
     ].map((country) => country.name);
     setSelectedCountries(allCountries);
-    // setSelectedCountry(allCountries);
+    setSelectedCountry(allCountries);
     setCardType("MA");
   };
 
   const deselectAllCountries = () => {
     setSelectedCountries([]);
-    setSelectedCountryLocal(null);
     setSelectedCountry(null);
   };
 
   const handleCountryClick = (countryName) => {
-    setSelectedCountryLocal(countryName);
+    // setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("MA");
-    cardType("MA");
     console.log(selectedCountry);
   };
 
   const clearSelection = () => {
-    setSelectedCountryLocal(null);
     setSelectedCountry(null);
   };
 
