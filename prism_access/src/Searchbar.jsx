@@ -64,7 +64,7 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
             } else if (cardType === 'MA' && country === 'Brazil') {
                 fileKey = "Brazil_MA.xlsx";
             } else {
-                alert("Invalid card type.");
+                // alert("Invalid card type.");
                 return;
             }
 
@@ -176,7 +176,7 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
         } else if (cardType === 'MA' && country === 'Brazil') {
             filePath = "21";
         } else {
-            alert("Invalid card type.");
+            // alert("Invalid card type.");
             setLoading(false);
             return;
         }

@@ -82,7 +82,6 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
     } else {
       setSelectedCountries([...selectedCountries, countryName]);
     }
-    // setSelectedCountry(selectedCountries);
     setCardType("Reimbursement");
   };
 
@@ -107,7 +106,7 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
     // setSelectedCountryLocal(countryName);
     setSelectedCountry(countryName);
     setCardType("Reimbursement"); // set card type to "Reimbursement"
-    cardType("Reimbursement");
+    // cardType("Reimbursement");
     console.log(selectedCountry);
 };
 

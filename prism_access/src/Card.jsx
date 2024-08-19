@@ -123,14 +123,12 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
   ];
 
 
-
   const handleCountryToggle = (countryName) => {
     if (selectedCountries.includes(countryName)) {
       setSelectedCountries(selectedCountries.filter((name) => name !== countryName));
     } else {
       setSelectedCountries([...selectedCountries, countryName]);
     }
-    // setSelectedCountry(selectedCountries);
     setCardType("MA");
   };
 

@@ -9,7 +9,8 @@ import Footer from './Footer.jsx';
 import Roche_logo from "./assets/Roche_Logo.png"
 
 function App() {
-    const [selectedCountries, setSelectedCountries] = useState([]);
+    const [selectedCountriesMA, setSelectedCountriesMA] = useState([]);
+    const [selectedCountriesReimbursement, setSelectedCountriesReimbursement] = useState([]);
     const [cardType, setCardType] = useState(null);
     const [results, setResults] = useState([]);
     const [visualization1, setVisualization1] = useState('');
@@ -26,6 +27,8 @@ function App() {
         console.log("Results state updated:", results);  // Log state update for results
     }, [results]);
 
+    const selectedCountries = [...new Set([...selectedCountriesMA, ...selectedCountriesReimbursement])];
+    
     return (
         <>
             <div className="container">
@@ -39,9 +42,9 @@ function App() {
                     </nav>
                 </div>
                 <div className="cards-wrapper">
-                    <Card selectedCountries={selectedCountries} setSelectedCountries={setSelectedCountries} cardType={cardType} setCardType={setCardType} />
-                    <Card2 selectedCountries={selectedCountries} setSelectedCountries={setSelectedCountries}  cardType={cardType} setCardType={setCardType} />
-                </div>
+                    <Card selectedCountries={selectedCountriesMA} setSelectedCountries={setSelectedCountriesMA} cardType={cardType} setCardType={setCardType} />
+                    <Card2 selectedCountries={selectedCountriesReimbursement} setSelectedCountries={setSelectedCountriesReimbursement} cardType={cardType} setCardType={setCardType} />
+               </div>
                 <div className='search'>
                     <Searchbar selectedCountries={selectedCountries} cardType={cardType} onResultsFetched={handleResultsFetched} />
                 </div>
