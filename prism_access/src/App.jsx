@@ -16,6 +16,20 @@ function App() {
     const [visualization1, setVisualization1] = useState('');
     const [visualization2, setVisualization2] = useState('');
 
+
+    const handleMASelection = (countries) => {
+        setSelectedCountriesMA(countries);
+        setSelectedCountriesReimbursement([]); // Clear Reimbursement selections
+        setCardType("MA");
+    };
+
+    const handleReimbursementSelection = (countries) => {
+        setSelectedCountriesReimbursement(countries);
+        setSelectedCountriesMA([]); // Clear MA selections
+        setCardType("Reimbursement");
+    };
+
+
     const handleResultsFetched = (data) => {
         console.log("Data fetched:", data);
         setResults(data.results);
@@ -42,9 +56,19 @@ function App() {
                     </nav>
                 </div>
                 <div className="cards-wrapper">
-                    <Card selectedCountries={selectedCountriesMA} setSelectedCountries={setSelectedCountriesMA} cardType={cardType} setCardType={setCardType} />
-                    <Card2 selectedCountries={selectedCountriesReimbursement} setSelectedCountries={setSelectedCountriesReimbursement} cardType={cardType} setCardType={setCardType} />
-               </div>
+                    <Card
+                        selectedCountries={selectedCountriesMA}
+                        setSelectedCountries={handleMASelection}
+                        cardType={cardType}
+                        setCardType={setCardType}
+                    />
+                    <Card2
+                        selectedCountries={selectedCountriesReimbursement}
+                        setSelectedCountries={handleReimbursementSelection}
+                        cardType={cardType}
+                        setCardType={setCardType}
+                    />
+                </div>
                 <div className='search'>
                     <Searchbar selectedCountries={selectedCountries} cardType={cardType} onResultsFetched={handleResultsFetched} />
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
 import combinedData from './assets/combined_data.json'; // Adjust the path as necessary
@@ -84,21 +84,28 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
         setSuggestions([]);
     };
 
-    const getFilteredSuggestions = (query) => {
-        if (!query || !selectedCountries.length || !cardType) return [];
-        let filteredSuggestions = [];
-
-        selectedCountries.forEach((country) => {
-            const data = combinedData[country]?.[cardType]?.[searchType] || [];
-            filteredSuggestions = [...filteredSuggestions, ...data.filter(item => item.toLowerCase().includes(query.toLowerCase()))];
+    // Memoize the filtered data
+    const filteredData = useMemo(() => {
+        const result = [];
+        selectedCountries.forEach(country => {
+            if (combinedData[country] && combinedData[country][cardType] && combinedData[country][cardType][searchType]) {
+                result.push(...combinedData[country][cardType][searchType]);
+            }
         });
+        return [...new Set(result)]; // Remove duplicates
+    }, [selectedCountries, cardType, searchType]);
 
-        return [...new Set(filteredSuggestions)]; // Remove duplicates
+    // Efficient search function
+    const searchSuggestions = (query) => {
+        if (!query) return [];
+        query = query.toLowerCase();
+        return filteredData
+            .filter(item => item.toLowerCase().includes(query))
+            .slice(0, 20); // Limit to 20 suggestions for better performance
     };
 
-
     const onSuggestionsFetchRequested = ({ value }) => {
-        setSuggestions(getFilteredSuggestions(value));
+        setSuggestions(searchSuggestions(value));
     };
 
     const onSuggestionsClearRequested = () => {

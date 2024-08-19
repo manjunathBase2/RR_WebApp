@@ -119,6 +119,7 @@ def load_data(file_paths):
     
     # Combine all DataFrames
     combined_df = pd.concat(data_frames, ignore_index=True)
+    # print(combined_df) 
     return combined_df
 
 
@@ -126,9 +127,12 @@ def load_data(file_paths):
 def filter_data(df, column_name, search_term, start_date, end_date):
     logging.debug(f"Start date: {start_date}, End date: {end_date}, Column: {column_name}, Term: {search_term}")
 
-    #remove the rows with empty 'Date of decision' column
-    if start_date != None or end_date != None :
-        df = df.dropna(subset=['Date of decision'])
+    # Check if 'Date of decision' column exists and contains non-null values
+    if 'Date of decision' in df.columns and df['Date of decision'].notna().any():
+        # Remove the rows with empty 'Date of decision' column if start_date or end_date is provided
+        if start_date is not None or end_date is not None:
+            df = df.dropna(subset=['Date of decision'])
+            
     if start_date and end_date:
         start_date = pd.to_datetime(start_date, errors='coerce')
         end_date = pd.to_datetime(end_date, errors='coerce')
@@ -139,6 +143,10 @@ def filter_data(df, column_name, search_term, start_date, end_date):
     elif end_date:
         end_date = pd.to_datetime(end_date, errors='coerce')
         df = df[df['Date of decision'] <= end_date]
+    # else case if the Date of decision is empty 
+    print(df)
+
+
 
     if column_name and search_term:
         df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False, regex=False)]

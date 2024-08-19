@@ -14,6 +14,7 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
   const [reimBodyName, setReimBodyName] = useState('');
   const [reimBodyUrl, setReimBodyUrl] = useState('');
 
+
     useEffect(() => {
     if (selectedCountry) {
       if (selectedCountry === 'Germany') {
@@ -77,12 +78,13 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
   ];
 
   const handleCountryToggle = (countryName) => {
+    let newSelection;
     if (selectedCountries.includes(countryName)) {
-      setSelectedCountries(selectedCountries.filter((name) => name !== countryName));
+      newSelection = selectedCountries.filter((name) => name !== countryName);
     } else {
-      setSelectedCountries([...selectedCountries, countryName]);
+      newSelection = [...selectedCountries, countryName];
     }
-    setCardType("Reimbursement");
+    setSelectedCountries(newSelection);
   };
 
   const selectAllCountries = () => {
@@ -92,13 +94,11 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
       ...australiaCountries,
     ].map((country) => country.name);
     setSelectedCountries(allCountries);
-    // setSelectedCountry(allCountries);
     setCardType("Reimbursement");
   };
 
   const deselectAllCountries = () => {
     setSelectedCountries([]);
-    // setSelectedCountryLocal(null);
     setSelectedCountry(null);
   };
 

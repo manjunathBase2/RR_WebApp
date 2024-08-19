@@ -44,13 +44,13 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
         setMaBodyUrl('https://www.tga.gov.au/sites/default/files/prescription-medicines-registration-process.pdf');
       } else if(selectedCountry === 'USA'){
         setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
-        setMaBodyName('FDA(Food and Drug Administration)');
+        setMaBodyName('Food and Drug Administration (FDA)');
         setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
       }
       else if(selectedCountry==='France'){
         setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
-        setMaBodyName('FDA(Food and Drug Administration)');
-        setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
+        setMaBodyName('French National Agency for Medicines and Health Products Safety (ANSM)');
+        setMaBodyUrl('https://docs.google.com/document/d/1tWU7RaP51x7uEIaSgmfkukVF97bBomobyrOsU9SvzX4/edit#heading=h.4st7ushemtrd');
       }
       else if(selectedCountry==="Spain"){
         setCountryUrl("https://docs.google.com/document/d/19ohXaL-tgW2iqNKqzDAVROat3LBdm3KSMTRl91OVC8A/edit?usp=sharing");
@@ -124,12 +124,13 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
 
 
   const handleCountryToggle = (countryName) => {
+    let newSelection;
     if (selectedCountries.includes(countryName)) {
-      setSelectedCountries(selectedCountries.filter((name) => name !== countryName));
+      newSelection = selectedCountries.filter((name) => name !== countryName);
     } else {
-      setSelectedCountries([...selectedCountries, countryName]);
+      newSelection = [...selectedCountries, countryName];
     }
-    setCardType("MA");
+    setSelectedCountries(newSelection);
   };
 
   const selectAllCountries = () => {
@@ -141,7 +142,6 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
       ...eastAsiaCountries,
     ].map((country) => country.name);
     setSelectedCountries(allCountries);
-    setSelectedCountry(allCountries);
     setCardType("MA");
   };
 
