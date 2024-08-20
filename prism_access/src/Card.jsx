@@ -43,7 +43,7 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
         setMaBodyName('Therapeutic Goods Administration (TGA) ');
         setMaBodyUrl('https://www.tga.gov.au/sites/default/files/prescription-medicines-registration-process.pdf');
       } else if(selectedCountry === 'USA'){
-        setCountryUrl('https://docs.google.com/document/d/12UsGDDaLU58BPmd5UhykzkMPDLpUgxXbp_TQJwpiQjs/edit?usp=sharing');
+        setCountryUrl('https://docs.google.com/document/d/1kCf6dmgI2SOB0Qi1aRoOeUKaZsZmaFXCfhuwn_PkAMA/edit#heading=h.4st7ushemtrd');
         setMaBodyName('Food and Drug Administration (FDA)');
         setMaBodyUrl('https://www.fda.gov/drugs/information-consumers-and-patients-drugs/fdas-drug-review-process-ensuring-drugs-are-safe-and-effective');
       }
