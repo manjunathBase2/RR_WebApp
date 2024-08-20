@@ -434,7 +434,7 @@ li:hover {
 .results-table td {
   border: 1px solid #ddd;
   padding: 8px;
-  min-width: 200px;
+  min-width: 170px;
   /* max-width: 250px; */
   /* flex-basis: 300px; */
   /* text-align: justify; */
