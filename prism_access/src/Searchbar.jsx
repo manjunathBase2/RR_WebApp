@@ -197,8 +197,9 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
         try {
             const response = await axios.post(
 
-                'http://localhost:5000/filter',
+                // 'http://localhost:5000/filter',
                 // 'http://10.146.71.0:5000/filter',
+                '/filter',
 
             searchData);
             console.log("Response Data:", response.data);
