@@ -14,11 +14,11 @@ function ClinicalTrials() {
     const handleFilter = async () => {
         try {
             const response = await axios.post(
-                // `http://localhost:5000/clinical/`,
-                // `http://10.146.71.0:5000/clinical/`,
-                `/clinical/`,
-                // `https://rr-backend-m7hi.onrender.com/clinical/`,
-                // 'https://drug-reimbursement-regulatory-status.roche.com/443/clinical/',
+                // `http://localhost:5000/studies/`,
+                // `http://10.146.71.0:5000/studies/`,
+                `/studies/`,
+                // `https://rr-backend-m7hi.onrender.com/studies/`,
+                // 'https://drug-reimbursement-regulatory-status.roche.com/443/studies/',
 
             {
                 column_name: columnName,
