@@ -294,6 +294,11 @@ def filter_clinical_trials(df, column_name, search_term):
     result = [OrderedDict(zip(df.columns, row)) for row in df.values]
     return result
 
+# Route to return Hello World on homepage
+@app.route('/')
+def helloworld():
+    return 'Hello World!!'
+
 # Route to handle POST requests for data filtering
 @app.route('/filter', methods=['OPTIONS', 'POST'])
 def filter_data_route():
@@ -311,7 +316,6 @@ def filter_data_route():
     search_term = data.get('search_term', '')
     start_date = data.get('start_date')
     end_date = data.get('end_date')
-
     if not file_paths: 
         return jsonify([])  # Return an empty list if no file path is provided
 
@@ -392,4 +396,4 @@ if __name__ == "__main__":
     if mode == 'dev':
         app.run(debug=True)
     elif mode == 'prod':
-        serve(app,host="0.0.0.0",port=5000,threads=7)
+        serve(app,host="localhost",port=5000,threads=7)

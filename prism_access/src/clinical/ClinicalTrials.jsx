@@ -16,8 +16,10 @@ function ClinicalTrials() {
             const response = await axios.post(
                 // `http://localhost:5000/clinical/`,
                 // `http://10.146.71.0:5000/clinical/`,
-                // `/clinical/`,
-                `https://rr-backend-m7hi.onrender.com/clinical/`,
+                `/clinical/`,
+                // `https://rr-backend-m7hi.onrender.com/clinical/`,
+                // 'https://drug-reimbursement-regulatory-status.roche.com/443/clinical/',
+
             {
                 column_name: columnName,
                 search_term: searchTerm
