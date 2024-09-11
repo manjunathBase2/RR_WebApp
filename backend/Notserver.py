@@ -277,16 +277,13 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         'visualization2': bar_chart
    }
 
-clinical_trials_data = None
-
 def load_clinical_trials_data():
-    global clinical_trials_data
-    if clinical_trials_data is None:
-        path = os.getcwd()
-        file_path = r'data/ctg-studies.csv'
-        file_path = os.path.join(path, file_path)
-        clinical_trials_data = pd.read_csv(file_path)
-    return clinical_trials_data
+    path = os.getcwd()
+    file_path = r'data/Clinical_Trials.xlsx'
+    file_path = os.path.join(path, file_path)
+    df = pd.read_excel(file_path)
+    # df['StartDate'] = pd.to_datetime(df['Start Date'], errors='coerce')
+    return df
 
 # Function to filter clinical trials data based on criteria
 def filter_clinical_trials(df, column_name, search_term):
