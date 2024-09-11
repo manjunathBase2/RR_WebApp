@@ -6,7 +6,7 @@ import '../index.css';
 import Roche_logo from '../assets/Roche_Logo.png';
 
 function ClinicalTrials() {
-    const [columnName, setColumnName] = useState('');
+    const [columnName, setColumnName] = useState('NCT Number');
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
     const [expandedCells, setExpandedCells] = useState({});
