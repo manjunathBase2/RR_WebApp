@@ -183,13 +183,13 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         centre_circle = plt.Circle((0, 0), 0.70, color='white')
         ax.add_artist(centre_circle)
             
-        plt.setp(texts, size=10)
-        plt.setp(autotexts, size=10)
+        plt.setp(texts, size=8)
+        plt.setp(autotexts, size=8)
 
         # Adjust title position and add padding
         fig.subplots_adjust(top=0.85)
         ax.set_title('Number of Decisions', fontsize=16, weight='bold', pad=20)
-        ax.legend(fontsize=10, loc='upper center', bbox_to_anchor=(0.5, -0.1), fancybox=True, shadow=True, ncol=1)
+        ax.legend(fontsize=8, loc='upper center', bbox_to_anchor=(0.5, -0.1), fancybox=True, shadow=True, ncol=1)
             
         # Save the donut chart to a bytes buffer
         donut_buf = io.BytesIO()
@@ -200,18 +200,23 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         plt.close(fig)
 
         # Generate the bar chart
-        def wrap_text(text, max_length=30):
+        def wrap_text(text, max_length=30, max_lines=2):
             lines = []
-            while len(text) > max_length:
+            while len(text) > 0 and len(lines) < max_lines:
                 # Find the last space within the max_length limit
                 wrap_index = text.rfind(' ', 0, max_length)
                 if wrap_index == -1:
                     # No spaces found; break at max_length
                     wrap_index = max_length
-                lines.append(text[:wrap_index])
+                lines.append(text[:wrap_index].strip())
                 text = text[wrap_index:].strip()
-            lines.append(text)
+
+            # If there's leftover text and we're on the last line, truncate it
+            if len(lines) == max_lines and len(text) > 0:
+                lines[-1] = lines[-1][:max_length - 3] + '...'  # Append '...' to indicate truncation
+
             return '\n'.join(lines)
+
         op=''
         if "Therapeutic Area" in df.columns and not df["Therapeutic Area"].isnull().all():
             op = "Therapeutic Area"
@@ -243,7 +248,7 @@ def filter_data(df, column_name, search_term, start_date, end_date):
                                     xytext=(5, 0), textcoords='offset points',
                                     ha='left', va='center', fontsize=10)
 
-            wrapped_labels = [wrap_text(label, max_length=50) for label in therapeutic_areas_sorted]
+            wrapped_labels = [wrap_text(label, max_length=60) for label in therapeutic_areas_sorted]
             ax.set_yticks(bar_positions)
             ax.set_yticklabels(wrapped_labels, fontsize=10)
             ax.legend(fontsize=10, loc='upper center', bbox_to_anchor=(0.5, -0.15), fancybox=True, shadow=True, ncol=1)
