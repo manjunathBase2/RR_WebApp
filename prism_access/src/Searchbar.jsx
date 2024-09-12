@@ -213,7 +213,15 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
             onResultsFetched({
                 results: response.data.results,
                 visualization1: response.data.visualization1,
-                visualization2: response.data.visualization2
+                visualization2: response.data.visualization2,
+                searchInfo: {
+                    cardType,
+                    searchType,
+                    searchQuery,
+                    selectedCountries,
+                    startDate,
+                    endDate
+                }
             });
         } catch (error) {
             console.error("There was an error with the search:", error);

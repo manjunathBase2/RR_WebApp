@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Resulttable({ results }) {
+function Resulttable({ results, searchInfo, selectedCountries }) {
     const [expandedCells, setExpandedCells] = useState({});
 
     const getTimestamp = () => {
@@ -19,6 +19,16 @@ function Resulttable({ results }) {
 
         const timestamp = getTimestamp();
         const csvRows = [];
+
+        // Add search information headers
+        csvRows.push(`Search Type,${searchInfo.cardType}`);
+        csvRows.push(`Search Criteria,${searchInfo.searchType}`);
+        csvRows.push(`Search Term,${searchInfo.searchQuery}`);
+        csvRows.push(`Regions,${selectedCountries.join(', ')}`);
+        csvRows.push(`Start Date,${searchInfo.startDate}`);
+        csvRows.push(`End Date,${searchInfo.endDate}`);
+        csvRows.push(''); // Empty row for separation
+
         const headers = Object.keys(results[0]);
         csvRows.push(headers.join(','));
 
@@ -46,6 +56,16 @@ function Resulttable({ results }) {
 
         const timestamp = getTimestamp();
         const headers = Object.keys(results[0]);
+        const searchInfoTable = `
+            <table style="border-collapse: collapse; margin-bottom: 20px;">
+                <tr><td style="border: 1px solid black; padding: 2px;">Search Type</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.cardType}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">Search Criteria</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.searchType}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">Search Term</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.searchQuery}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">Regions</td><td style="border: 1px solid black; padding: 2px;">${selectedCountries.join(', ')}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">Start Date</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.startDate}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">End Date</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.endDate}</td></tr>
+            </table>
+        `;
 
         const tableHeaders = headers.map(header => `<td style="border: 1px solid black; padding: 2px;">${header}</td>`).join('');
         const tableRows = results.map(row => {
@@ -77,6 +97,7 @@ function Resulttable({ results }) {
                         text-align: left;
                     }
                 </style>
+                ${searchInfoTable}
                 <table>
                     <thead>
                         <tr>${tableHeaders}</tr>
