@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Header from "./Header.jsx";
 import Card from "./Card.jsx";
@@ -15,7 +14,7 @@ function App() {
     const [results, setResults] = useState([]);
     const [visualization1, setVisualization1] = useState('');
     const [visualization2, setVisualization2] = useState('');
-
+    const [searchInfo, setSearchInfo] = useState(null);
 
     const handleMASelection = (countries) => {
         setSelectedCountriesMA(countries);
@@ -29,12 +28,12 @@ function App() {
         setCardType("Reimbursement");
     };
 
-
     const handleResultsFetched = (data) => {
         console.log("Data fetched:", data);
         setResults(data.results);
         setVisualization1(data.visualization1);
         setVisualization2(data.visualization2);
+        setSearchInfo(data.searchInfo);
     };
 
     useEffect(() => {
@@ -42,12 +41,12 @@ function App() {
     }, [results]);
 
     const selectedCountries = [...new Set([...selectedCountriesMA, ...selectedCountriesReimbursement])];
-    
+
     return (
         <>
             <div className="container">
                 <div className="header-container">
-                    <img src={Roche_logo} className="logo" alt="Logo" /> 
+                    <img src={Roche_logo} className="logo" alt="Logo" />
                     <Header />
                     <nav>
                         <ul>
@@ -70,7 +69,11 @@ function App() {
                     />
                 </div>
                 <div className='search'>
-                    <Searchbar selectedCountries={selectedCountries} cardType={cardType} onResultsFetched={handleResultsFetched} />
+                    <Searchbar
+                        selectedCountries={selectedCountries}
+                        cardType={cardType}
+                        onResultsFetched={handleResultsFetched}
+                    />
                 </div>
                 <>
                     {(visualization1 || visualization2) && (
@@ -93,7 +96,15 @@ function App() {
                     )}
                 </>
                 <div className='results'>
-                    {results.length > 0 ? <Resulttable results={results} /> : <p></p>}
+                    {results.length > 0 ? (
+                        <Resulttable
+                            results={results}
+                            searchInfo={searchInfo}
+                            selectedCountries={selectedCountries}
+                        />
+                    ) : (
+                        <p></p>
+                    )}
                 </div>
                 <Footer />
             </div>
