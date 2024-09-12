@@ -131,19 +131,29 @@ def filter_data(df, column_name, search_term, start_date, end_date):
     if 'Date of decision' in df.columns and df['Date of decision'].notna().any():
         # Remove the rows with empty 'Date of decision' column if start_date or end_date is provided
         if start_date is not None or end_date is not None:
-            df = df.dropna(subset=['Date of decision'])
+            # replace NaT with None
+            df['Date of decision'] = df['Date of decision'].where(pd.notnull(df['Date of decision']), None)
             
+    print(start_date, end_date)
+
     if start_date and end_date:
+        df = df.dropna(subset=['Date of decision'])
         start_date = pd.to_datetime(start_date, errors='coerce')
         end_date = pd.to_datetime(end_date, errors='coerce')
         df = df[(df['Date of decision'] >= start_date) & (df['Date of decision'] <= end_date)]
     elif start_date:
+        df = df.dropna(subset=['Date of decision'])
         start_date = pd.to_datetime(start_date, errors='coerce')
         df = df[df['Date of decision'] >= start_date]
     elif end_date:
+        df = df.dropna(subset=['Date of decision'])
         end_date = pd.to_datetime(end_date, errors='coerce')
         df = df[df['Date of decision'] <= end_date]
     # else case if the Date of decision is empty 
+    print(df)
+
+    df['Date of decision'] = df['Date of decision'].fillna('-')
+
     print(df)
 
 

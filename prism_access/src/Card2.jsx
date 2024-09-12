@@ -49,7 +49,7 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
       }
       else if(selectedCountry === 'Canada'){
         setRegionUrl('https://docs.google.com/document/d/1NMSDSPgpXfXfrwNCjZrvXI-2TxTMPQksaecPwR1-WIo/edit');
-        setReimBodyName("Canada's Drug Agency (CADTH");
+        setReimBodyName("Canada's Drug Agency (CADTH)");
         setReimBodyUrl('https://www.cadth.ca/reimbursement-review-reports');
       }
     } else {
