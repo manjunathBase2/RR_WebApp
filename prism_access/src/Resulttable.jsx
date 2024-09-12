@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as XLSX from 'xlsx';
 
 function Resulttable({ results, searchInfo, selectedCountries }) {
     const [expandedCells, setExpandedCells] = useState({});
@@ -14,41 +15,101 @@ function Resulttable({ results, searchInfo, selectedCountries }) {
         return `${year}-${month}-${day}_${hours}-${minutes}-${seconds}`;
     };
 
-    const downloadCSV = () => {
+    const downloadXLSX = () => {
         if (!results || results.length === 0) return;
 
         const timestamp = getTimestamp();
-        const csvRows = [];
-
-        // Add search information headers
-        csvRows.push(`Search Type,${searchInfo.cardType}`);
-        csvRows.push(`Search Criteria,${searchInfo.searchType}`);
-        csvRows.push(`Search Term,${searchInfo.searchQuery}`);
-        csvRows.push(`Regions,${selectedCountries.join(', ')}`);
-        csvRows.push(`Start Date,${searchInfo.startDate}`);
-        csvRows.push(`End Date,${searchInfo.endDate}`);
-        csvRows.push(''); // Empty row for separation
-
         const headers = Object.keys(results[0]);
-        csvRows.push(headers.join(','));
 
-        for (const row of results) {
-            const values = headers.map(header => {
-                const value = row[header];
-                return value ? `"${String(value).replace(/"/g, '""')}"` : '';
-            });
-            csvRows.push(values.join(','));
+        // Create workbook
+        const wb = XLSX.utils.book_new();
+
+        // Create metadata sheet
+        const wsMetadata = XLSX.utils.aoa_to_sheet([
+            ['Search Information'],
+            ['Search Type', searchInfo.cardType],
+            ['Search Criteria', searchInfo.searchType],
+            ['Search Term', searchInfo.searchQuery],
+            ['Regions', selectedCountries.join(', ')],
+            ['Start Date (yyyy-mm-dd)', searchInfo.startDate],
+            ['End Date (yyyy-mm-dd)', searchInfo.endDate]
+        ]);
+
+        // Style metadata sheet
+        const metadataRange = XLSX.utils.decode_range(wsMetadata['!ref']);
+        for (let R = metadataRange.s.r; R <= metadataRange.e.r; R++) {
+            for (let C = metadataRange.s.c; C <= metadataRange.e.c; C++) {
+                const cellAddress = { c: C, r: R };
+                const cellRef = XLSX.utils.encode_cell(cellAddress);
+                if (!wsMetadata[cellRef]) continue;
+                wsMetadata[cellRef].s = {
+                    fill: { fgColor: { rgb: "FFF8DC" } }, // Light yellow background
+                    font: { bold: true },
+                    border: {
+                        top: { style: "thin", color: { auto: 1 } },
+                        bottom: { style: "thin", color: { auto: 1 } },
+                        left: { style: "thin", color: { auto: 1 } },
+                        right: { style: "thin", color: { auto: 1 } }
+                    }
+                };
+            }
         }
 
-        const csvString = csvRows.join('\n');
-        const blob = new Blob([csvString], { type: 'text/csv' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `results_${timestamp}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        
+        // Create data sheet
+        const wsData = XLSX.utils.json_to_sheet(results);
+        
+        // Style header row
+        const headerRange = XLSX.utils.decode_range(wsData['!ref']);
+        for (let C = headerRange.s.c; C <= headerRange.e.c; C++) {
+            const cellAddress = { c: C, r: headerRange.s.r };
+            const cellRef = XLSX.utils.encode_cell(cellAddress);
+            wsData[cellRef].s = {
+                fill: { fgColor: { rgb: "4682B4" } }, // Steel blue background
+                font: { bold: true, color: { rgb: "FFFFFF" } }, // White text
+                border: {
+                    top: { style: "medium", color: { auto: 1 } },
+                    bottom: { style: "medium", color: { auto: 1 } },
+                    left: { style: "medium", color: { auto: 1 } },
+                    right: { style: "medium", color: { auto: 1 } }
+                }
+            };
+        }
+        
+        // Style data rows with alternating colors
+        for (let R = headerRange.s.r + 1; R <= headerRange.e.r; R++) {
+            const rowColor = R % 2 === 0 ? "F0F8FF" : "FFFFFF"; // Light blue for even rows, white for odd
+            for (let C = headerRange.s.c; C <= headerRange.e.c; C++) {
+                const cellAddress = { c: C, r: R };
+                const cellRef = XLSX.utils.encode_cell(cellAddress);
+                if (!wsData[cellRef]) continue;
+                wsData[cellRef].s = {
+                    fill: { fgColor: { rgb: rowColor } },
+                    border: {
+                        top: { style: "thin", color: { auto: 1 } },
+                        bottom: { style: "thin", color: { auto: 1 } },
+                        left: { style: "thin", color: { auto: 1 } },
+                        right: { style: "thin", color: { auto: 1 } }
+                    }
+                };
+            }
+        }
+        
+        // Set column widths
+        const maxWidth = 50;
+        const columnWidths = headers.map(header =>
+            Math.min(maxWidth, Math.max(...results.map(row => row[header] ? row[header].toString().length : 0), header.length))
+        );
+        wsData['!cols'] = columnWidths.map(width => ({ width }));
+        
+        // Add data sheet to workbook
+        XLSX.utils.book_append_sheet(wb, wsData, "Results");
+
+        // Add metadata sheet to workbook
+        XLSX.utils.book_append_sheet(wb, wsMetadata, "Search Metadata");
+        
+        // Generate file
+        XLSX.writeFile(wb, `results_${timestamp}.xlsx`);
     };
 
     const downloadDOC = () => {
@@ -62,8 +123,8 @@ function Resulttable({ results, searchInfo, selectedCountries }) {
                 <tr><td style="border: 1px solid black; padding: 2px;">Search Criteria</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.searchType}</td></tr>
                 <tr><td style="border: 1px solid black; padding: 2px;">Search Term</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.searchQuery}</td></tr>
                 <tr><td style="border: 1px solid black; padding: 2px;">Regions</td><td style="border: 1px solid black; padding: 2px;">${selectedCountries.join(', ')}</td></tr>
-                <tr><td style="border: 1px solid black; padding: 2px;">Start Date</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.startDate}</td></tr>
-                <tr><td style="border: 1px solid black; padding: 2px;">End Date</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.endDate}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">Start Date (yyyy-mm-dd)</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.startDate}</td></tr>
+                <tr><td style="border: 1px solid black; padding: 2px;">End Date (yyyy-mm-dd)</td><td style="border: 1px solid black; padding: 2px;">${searchInfo.endDate}</td></tr>
             </table>
         `;
 
@@ -137,12 +198,12 @@ function Resulttable({ results, searchInfo, selectedCountries }) {
     return (
         <div className="results-table-container">
             <div>
-            <button onClick={downloadCSV} className="download-button">
-                Download CSV <i className="fa fa-download"></i>
-            </button>
-            <button onClick={downloadDOC} className="download-button">
-                Download DOC <i className="fa fa-download"></i>
-            </button>
+                <button onClick={downloadXLSX} className="download-button">
+                    Download Excel <i className="fa fa-download"></i>
+                </button>
+                <button onClick={downloadDOC} className="download-button">
+                    Download DOC <i className="fa fa-download"></i>
+                </button>
             </div>
             <table className="results-table">
                 <thead>
