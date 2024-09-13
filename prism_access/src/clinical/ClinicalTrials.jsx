@@ -118,9 +118,9 @@ function ClinicalTrials() {
         setLoading(true);
         try {
             const response = await axios.post(
-                // `http://localhost:5000/studies`,
+                `http://localhost:5000/studies`,
                 // `http://10.146.71.0:5000/studies/`,
-                `/studies/`,
+                // `/studies/`,
                 // `https://rr-backend-m7hi.onrender.com/studies/`,
                 // 'https://drug-reimbursement-regulatory-status.roche.com/443/studies/',
                 {
