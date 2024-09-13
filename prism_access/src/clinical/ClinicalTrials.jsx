@@ -166,7 +166,6 @@ function ClinicalTrials() {
                         <option value="NCT Number">NCT Number</option>
                         <option value="Phases">Phases</option>
                         <option value="Study Title">Study Title</option>
-                        
                     </select>
 
                 </div>
