@@ -197,9 +197,9 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
         try {
             const response = await axios.post(
 
-                'http://localhost:5000/filter',
+                // 'http://localhost:5000/filter',
                 // 'http://10.146.71.0:5000/filter',
-                // '/filter',
+                '/filter',
                 // 'https://rr-backend-m7hi.onrender.com/filter',
                 // 'https://drug-reimbursement-regulatory-status.roche.com/443/filter',
 
