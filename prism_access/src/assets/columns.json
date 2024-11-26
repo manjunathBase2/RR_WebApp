@@ -1,11 +1,13 @@
 {
     "Australia_MA.xlsx": [
         "Product Name",
-        "Active Substance"
+        "Active Substance",
+        "Therapeutic Area"
     ],
     "Australia_Reimbursement.xlsx": [
         "Product Name",
-        "Active Substance"
+        "Active Substance",
+        "Therapeutic Area"
     ],
     "Brazil_MA.xlsx": [
         "Product Name",
@@ -50,11 +52,13 @@
     ],
     "Scotland_MA.xlsx": [
         "Product Name",
-        "Active Substance"
+        "Active Substance",
+        "Therapeutic Area"
     ],
     "Scotland_Reimbursement.xlsx": [
         "Product Name",
-        "Active Substance"
+        "Active Substance",
+        "Therapeutic Area"
     ],
     "South Korea_MA.xlsx": [
         "Product Name",
@@ -79,7 +83,8 @@
     ],
     "UK_MA.xlsx": [
         "Product Name",
-        "Active Substance"
+        "Active Substance",
+        "Therapeutic Area"
     ],
     "UK_Reimbursement.xlsx": [
         "Product Name",

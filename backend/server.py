@@ -11,6 +11,7 @@ import base64
 import numpy as np
 from waitress import serve
 from collections import OrderedDict
+import re
 
 # Set logging level for matplotlib.font_manager to WARNING
 logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
@@ -78,6 +79,19 @@ matplotlib.rcParams['font.family'] = 'Arial'
 #     return df
 
 
+# Function to clean text (removes non-alphanumeric characters, including hyphens)
+def clean_text(text):
+    # Replace hyphens with spaces, remove other non-alphanumeric characters, and convert to uppercase
+    text = re.sub(r'[-]', ' ', text)  # Replace hyphens with spaces
+    return re.sub(r'[^A-Za-z0-9\s]', '', text).upper()
+
+
+# Function to filter rows with wordwise match for 'Therapeutic Area' column
+def wordwise_match(cell_value, search_term):
+    input_words = set(clean_text(search_term).split())
+    cell_words = set(clean_text(cell_value).split())
+    return input_words.issubset(cell_words)
+
 # Function to load data from multiple Excel files
 def load_data(file_paths):
     path = os.getcwd()
@@ -133,8 +147,6 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         if start_date is not None or end_date is not None:
             # replace NaT with None
             df['Date of decision'] = df['Date of decision'].where(pd.notnull(df['Date of decision']), None)
-            
-    print(start_date, end_date)
 
     if start_date and end_date:
         df = df.dropna(subset=['Date of decision'])
@@ -150,20 +162,20 @@ def filter_data(df, column_name, search_term, start_date, end_date):
         end_date = pd.to_datetime(end_date, errors='coerce')
         df = df[df['Date of decision'] <= end_date]
     # else case if the Date of decision is empty 
-    print(df)
 
     df['Date of decision'] = df['Date of decision'].fillna('-')
 
-    print(df)
-
-
-
+    # Column-based filtering logic
     if column_name and search_term:
-        df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False, regex=False)]
+        if column_name == 'Therapeutic Area':
+            # Apply wordwise match logic for the 'Therapeutic Area' column
+            df = df[df[column_name].apply(lambda x: wordwise_match(x, search_term) if pd.notnull(x) else False)]
+        else:
+            # Regular filtering for other columns
+            df = df[df[column_name].astype(str).str.contains(search_term, case=False, na=False, regex=False)]
 
     logging.debug(f"Filtered data: {df.head()}")
 
-    # df = df.drop(columns=['Date of decision'])
     df = df.dropna(axis=1, how='all')  # Remove columns with all missing values
     df = df.where(pd.notnull(df), None)  # Replace NaN with None
 
