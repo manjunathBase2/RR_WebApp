@@ -119,10 +119,7 @@ function ClinicalTrials() {
         try {
             const response = await axios.post(
                 `http://localhost:5000/studies`,
-                // `http://10.146.71.0:5000/studies/`,
                 // `/studies/`,
-                // `https://rr-backend-m7hi.onrender.com/studies/`,
-                // 'https://drug-reimbursement-regulatory-status.roche.com/443/studies/',
                 {
                     column_name: columnName,
                     search_term: searchTerm
