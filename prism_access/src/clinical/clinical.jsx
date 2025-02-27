@@ -1,3 +1,15 @@
+/* ==========================================================================
+
+File: clinical.jsx
+
+Description:
+This file is the entry point for the clinical trials page. It renders the ClinicalTrials component.
+
+Features:
+- Renders the ClinicalTrials component  
+
+========================================================================== */
+
 import React from 'react'
 // import ReactDOM from 'react-dom/client'
 import ReactDOM from 'react-dom'

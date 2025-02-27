@@ -1,3 +1,27 @@
+/* ==========================================================================
+
+File: ClinicalTrials.jsx
+
+Description:
+ This component renders the ClinicalTrials interface, allowing users to search for clinical trials based on specific criteria.
+ It displays the search results in a table format and provides an option to download the results as a CSV file.
+
+Features:
+ - Renders the ClinicalTrials component with a header and footer.
+ - Allows users to select search criteria and enter a search term.
+ - Fetches and displays search results from a backend API.
+ - Provides an option to download the search results as a CSV file.
+ - Allows users to expand and collapse table cells for detailed view.
+
+Instructions:
+ 1. Select a search criterion from the dropdown menu.
+ 2. Enter a search term in the input field.
+ 3. Click the "Launch Search" button to fetch and display the results.
+ 4. Click on table cells to expand or collapse their content.
+ 5. Use the "Download CSV" button to download the search results as a CSV file.
+
+ ========================================================================= */
+
 import React, { useState } from 'react';
 import Header2 from './Header2';
 import Footer from '../Footer';
@@ -50,64 +74,6 @@ function ClinicalTrials() {
         a.click();
         document.body.removeChild(a);
     };
-
-    // const downloadDOC = () => {
-    //     if (!results || results.length === 0) return;
-
-    //     const timestamp = getTimestamp();
-    //     const headers = Object.keys(results[0]);
-
-    //     const tableHeaders = headers.map(header => `<td style="border: 1px solid black; padding: 2px;">${header}</td>`).join('');
-    //     const tableRows = results.map(row => {
-    //         const cells = headers.map(header => `<td style="border: 1px solid black; padding: 2px;">${row[header] !== null ? row[header] : '-'}</td>`).join('');
-    //         return `<tr>${cells}</tr>`;
-    //     }).join('');
-
-    //     const htmlContent = `
-    //         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-    //         <head><meta charset="utf-8"></head>
-    //         <body>
-    //             <style>
-    //                 @page {
-    //                     size: landscape;
-    //                     margin: 1cm 0.5cm 1cm 1.5cm; /* Top, right, bottom, left */
-    //                 }
-    //                 body {
-    //                     margin: 0;
-    //                 }
-    //                 table {
-    //                     width: 100%;
-    //                     border-collapse: collapse;
-    //                     font-size: 5px;
-    //                     margin-left: 0.5cm;
-    //                 }
-    //                 td, th {
-    //                     border: 1px solid black;
-    //                     padding: 2px;
-    //                     text-align: left;
-    //                 }
-    //             </style>
-    //             <table>
-    //                 <thead>
-    //                     <tr>${tableHeaders}</tr>
-    //                 </thead>
-    //                 <tbody>
-    //                     ${tableRows}
-    //                 </tbody>
-    //             </table>
-    //         </body>
-    //         </html>
-    //     `;
-
-    //     const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
-    //     const url = URL.createObjectURL(blob);
-    //     const a = document.createElement('a');
-    //     a.href = url;
-    //     a.download = `results_${timestamp}.doc`;
-    //     document.body.appendChild(a);
-    //     a.click();
-    //     document.body.removeChild(a);
-    // };
 
     const handleFilter = async () => {
         if (!columnName || !searchTerm) {
