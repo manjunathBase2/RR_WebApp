@@ -1,3 +1,48 @@
+'''
+Module: server.py
+
+Description:
+- This script defines the Flask server that serves the API endpoints for data filtering.
+- It also serves the excel data files for the React frontend.
+
+API Endpoints:
+1. GET /
+    - Returns 'Hello World!!' as a test response.
+
+2. POST /filter
+    - Accepts a JSON payload with the
+        - 'file_paths' (list of file IDs) to load data from multiple Excel files
+        - 'column_name' (string) to filter data based on a specific column
+        - 'search_term' (string) to filter data based on a search term
+        - 'start_date' (string) to filter data based on a start date
+        - 'end_date' (string) to filter data based on an end date
+    - Returns the filtered data as a JSON response.
+
+3. POST /studies
+    - Accepts a JSON payload with the
+        - 'column_name' (string) to filter clinical trials data based on a specific column
+        - 'search_term' (string) to filter clinical trials data based on a search term
+    - Returns the filtered clinical trials data as a JSON response.
+
+Dependencies:
+- Flask: pip install Flask
+- All other dependencies are included in the requirements.txt file.
+
+Usage:
+- Run the Flask server using the command: python server.py
+- The server will be accessible at http://localhost:5000/
+
+Note:
+- This script assumes that the Excel files are stored in the 'data' folder.
+- The 'ctg-studies.csv' file is used for clinical trials data.
+- The 'data' folder and 'ctg-studies.csv' file should be present in the same directory as this script.
+- The 'build' folder of the React frontend should be present in the 'client' folder at the same level as this script.
+- The React frontend should be built using 'npm run build' before running this server.
+- The server can be run in development mode (debug=True) or production mode (using Waitress).
+- The server is configured to allow CORS for all origins on all routes.
+
+'''
+
 from flask import Flask, request, jsonify
 import pandas as pd
 from flask_cors import CORS
@@ -16,7 +61,6 @@ import re
 # Set logging level for matplotlib.font_manager to WARNING
 logging.getLogger('matplotlib.font_manager').setLevel(logging.WARNING)
 
-
 # app = Flask(__name__)
 app = Flask(__name__, static_folder="../client/build", static_url_path="/")
 app.json.sort_keys = False
@@ -27,57 +71,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Set default font family for Matplotlib
 matplotlib.rcParams['font.family'] = 'Arial'
-
-# Function to load data from Excel file
-# def load_data(file_path):
-#     path = os.getcwd()
-#     if file_path == '1':
-#         file_path = r'data/Germany_MA.xlsx'
-#     elif file_path == '2':
-#         file_path = r'data/Germany_Reimbursement.xlsx'
-#     elif file_path == '3':
-#         file_path = r'data/Europe_MA.xlsx'
-#     elif file_path == '4':
-#         file_path = r'data/USA_MA.xlsx'
-#     elif file_path == '5':
-#         file_path = r'data/Scotland_MA.xlsx'
-#     elif file_path == '6':
-#         file_path = r'data/Scotland_Reimbursement.xlsx'
-#     elif file_path == '7':
-#         file_path = r'data/Australia_MA.xlsx'
-#     elif file_path == '8':
-#         file_path = r'data/Australia_Reimbursement.xlsx'
-#     elif file_path == "9":
-#         file_path = r'data/UK_Reimbursement.xlsx'
-#     elif file_path == "10":
-#         file_path = r'data/UK_MA.xlsx'
-#     elif file_path == "11":
-#         file_path = r'data/France_MA.xlsx'
-#     elif file_path == "12":
-#         file_path = r'data/France_Reimbursement.xlsx'
-#     elif file_path == "13":
-#         file_path = r'data/Spain_MA.xlsx'
-#     elif file_path == "14":
-#         file_path = r'data/Spain_Reimbursement.xlsx'
-#     elif file_path == "15":
-#         file_path = r'data/Sweden_MA.xlsx'
-#     elif file_path == "16":
-#         file_path = r'data/Sweden_Reimbursement.xlsx'
-#     elif file_path == "17":
-#         file_path = r'data/Canada_MA.xlsx'
-#     elif file_path == "18":
-#         file_path = r'data/Canada_Reimbursement.xlsx'
-#     elif file_path == "19":
-#         file_path = r'data/South Korea_MA.xlsx'
-#     elif file_path == "20":
-#         file_path = r'data/Italy_MA.xlsx'
-#     else:
-#         file_path = r'data/Brazil_MA.xlsx'
-#     file_path = os.path.join(path, file_path)
-#     df = pd.read_excel(file_path)
-#     df['Date of decision'] = pd.to_datetime(df['Date of decision'], errors='coerce', format='mixed')
-#     return df
-
 
 # Function to clean text (removes non-alphanumeric characters, including hyphens)
 def clean_text(text):
@@ -357,32 +350,8 @@ def filter_data_route():
         logging.error(f"Error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
     
-# @app.route('/get_columns', methods=['POST'])
-# def get_columns():
-#     data = request.get_json()
-#     file_path = data.get('file_path')
-
-#     if not file_path:
-#         return jsonify({'error': 'No file path provided'}), 400
-
-#     try:
-#         df = load_data(file_path)
-#         non_empty_columns = df.dropna(axis=1, how='all').columns.tolist()
-#         return jsonify({'columns': non_empty_columns})
-#     except Exception as e:
-#         logging.error(f"Error occurred: {str(e)}")
-#         return jsonify({'error': str(e)}), 500
-    
 @app.route('/studies', methods=['POST'])
 def filter_clinical_trials_route():
-    # if request.method == 'OPTIONS':
-    #     headers = {
-    #         'Access-Control-Allow-Origin': '*',
-    #         'Access-Control-Allow-Methods': 'POST',
-    #         'Access-Control-Allow-Headers': 'Content-Type'
-    #     }
-    #     return '', 200, headers
-
     data = request.get_json()
     column_name = data.get('column_name', '')
     search_term = data.get('search_term', '')
@@ -394,31 +363,6 @@ def filter_clinical_trials_route():
     except Exception as e:
         logging.error(f"Error occurred: {str(e)}")
         return jsonify({'error': str(e)}), 500
-
-# @app.route('/autosuggest', methods=['GET'])
-# def autosuggest():
-#     query = request.args.get('query', '')
-#     column_name = request.args.get('column_name', 'Product Name')
-#     file_path = request.args.get('file_path', '')
-
-#     if not file_path:
-#         return jsonify([])  # Return an empty list if no file path is provided
-
-#     try:
-#         df = load_data(file_path)
-#         if query and column_name in df.columns:
-#             results = df[df[column_name].astype(str).str.contains(query, case=False, na=False, regex=False)]
-#             suggestions = results[column_name].dropna().unique().tolist()
-            
-#             # Filter suggestions that start with the query
-#             suggestions_starting_with_query = [s for s in suggestions if s.lower().startswith(query.lower())]
-            
-#             return jsonify(suggestions_starting_with_query[:10])  # Return only the top 10 suggestions starting with the query
-#         return jsonify([])
-#     except Exception as e:
-#         logging.error(f"Error occurred: {str(e)}")
-#         return jsonify({'error':str(e)}),500
-
 
 mode = 'prod'
 

@@ -1,5 +1,14 @@
+/* ==========================================================================
 
+File: Header.jsx
 
+Description:
+This file defines the Header component. It displays the title of the application.
+
+Instructions:
+- The component does not receive any props.
+
+========================================================================== */
 
 function Header() {
     return (

@@ -1,3 +1,25 @@
+/* ==========================================================================
+
+File: Resulttable.jsx
+
+Description:
+This file defines the Resulttable component. It displays the results in a table format and provides functionality to download the results as an Excel or Word document.
+
+Features:
+- Displays the results in a table format.
+- Provides functionality to download the results as an Excel or Word document.
+
+Instructions:
+- The component receives the following props:
+    - results: An array of objects representing the search results.
+    - searchInfo: An object containing information about the search criteria.
+    - selectedCountries: An array of selected countries for the search.
+
+- The component uses the XLSX library to generate Excel files.
+- The component provides buttons to download the results as an Excel or Word document.
+
+========================================================================== */
+
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 

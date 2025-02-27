@@ -1,3 +1,20 @@
+/* ==========================================================================
+File:   Footer.jsx
+
+Description:
+This file defines the Footer component. It displays the Roche logo and the copyright information.
+
+Features:
+- Displays the Roche logo.
+- Displays the copyright information.
+
+Instructions:
+- The component does not receive any props.
+
+========================================================================== */
+
+
+
 import React from 'react';
 import RocheLogo from './assets/Roche_Logo.png';
 

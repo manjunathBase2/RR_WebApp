@@ -1,3 +1,15 @@
+/* ==========================================================================
+
+File: App.jsx
+Description: This file defines the main component of the application. It contains the header, cards, search bar, visualizations, and results table components. It also contains the state and functions to manage the selected countries and results.
+
+IMPORTANT: This file contains the main component of the application. It is the root component of the application and is responsible for managing the state and rendering the other components.
+This file is part of the core functionality of the application. Making changes to this file can cause the application to fail or not work as expected
+-- DO NOT DELETE THIS FILE --
+
+========================================================================== */
+
+
 import React, { useState, useEffect } from 'react';
 import Header from "./Header.jsx";
 import Card from "./Card.jsx";

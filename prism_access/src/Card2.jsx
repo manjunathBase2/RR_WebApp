@@ -1,3 +1,21 @@
+/* ==========================================================================
+
+File: Card2.jsx
+
+Description: This file defines the Reimbursement card component. It contains the list of countries and their respective reimbursement bodies. It also contains the logic to handle the selection of countries and display the reimbursement details.
+
+Features:
+- Displays a list of countries grouped by continent.
+- Allows the user to select/deselect individual countries or all countries.
+- Displays the reimbursement details for the selected country.
+- Provides links to the reimbursement body and the reimbursement process for the selected country.
+
+Instructions:
+- The component receives the selected countries, set of selected countries, card type, and set card type as props.
+- The component displays a list of countries grouped by continent.
+
+========================================================================== */
+
 import React, { useState, useEffect} from 'react';
 import germanyImage from './assets/country_img/germany.png';
 import scotlandImage from './assets/country_img/scotland.png';
@@ -14,7 +32,7 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
   const [reimBodyName, setReimBodyName] = useState('');
   const [reimBodyUrl, setReimBodyUrl] = useState('');
 
-
+  // This useEffect hook updates the reimbursement body and region URL based on the selected country
     useEffect(() => {
     if (selectedCountry) {
       if (selectedCountry === 'Germany') {
@@ -59,7 +77,7 @@ function Card2({ selectedCountries, setSelectedCountries, cardType, setCardType 
     }
   }, [selectedCountry]);
 
-
+  // List of countries grouped by continent
   const europeCountries = [
     { name: 'Germany', imgSrc: germanyImage },
     { name: 'Scotland', imgSrc: scotlandImage },

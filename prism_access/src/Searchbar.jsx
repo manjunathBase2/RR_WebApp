@@ -1,3 +1,23 @@
+/* ==========================================================================
+
+File: Searchbar.jsx
+
+Description:
+This file defines the Searchbar component. It contains the search input fields and search button for filtering data.
+
+Features:
+- Displays the search input fields and search button.
+- Fetches data based on search criteria.
+- Clears search criteria.
+
+Instructions:
+- The component receives props for onResultsFetched, selectedCountries, and cardType.
+- The onResultsFetched function is called when the search button is clicked.
+- The selectedCountries prop contains the list of selected countries.
+- The cardType prop contains the type of card selected (MA or Reimbursement).
+
+========================================================================== */
+
 import React, { useState, useEffect, useMemo } from 'react';
 import Autosuggest from 'react-autosuggest';
 import axios from 'axios';
@@ -195,6 +215,9 @@ function Searchbar({ onResultsFetched, selectedCountries, cardType }) {
         console.log("Search Data:", searchData);
 
         try {
+
+            // Here we are using axios to make a POST request to the server
+            // to fetch the filtered data based on the search criteria   
             const response = await axios.post(
 
                 'http://localhost:5000/filter',

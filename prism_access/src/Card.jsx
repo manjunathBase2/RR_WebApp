@@ -1,3 +1,24 @@
+/* ==========================================================================
+
+File: Card.jsx
+
+Description: This file defines the card component for MA. 
+It contains the list of countries and their respective market authorization details. It also contains the functions to select and deselect countries and display the details of the selected country.
+
+Features:
+- Displays a list of countries with checkboxes to select/deselect them
+- Displays the market authorization details of the selected country
+- Provides buttons to select all or deselect all countries
+- Provides a button to clear the selected country
+
+Instructions:
+- You can customize the design and layout of the card component
+- You can add additional countries or regions to the list
+- You can modify the market authorization details for each country
+- You can add additional functionalities or features to the card component
+
+========================================================================== */
+
 import React, { useState, useEffect } from 'react';
 import germanyImage from './assets/country_img/germany.png';
 import scotlandImage from './assets/country_img/scotland.png';
@@ -20,6 +41,7 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
   const [maBodyName, setMaBodyName] = useState('');
   const [maBodyUrl, setMaBodyUrl] = useState('');
 
+  // The following code defines the market authorization details for each country
   useEffect(() => {
     if (selectedCountry) {
       if (selectedCountry === 'Germany') {
@@ -93,6 +115,8 @@ function Card({ selectedCountries, setSelectedCountries, cardType, setCardType})
       setMaBodyUrl('');
     }
   }, [selectedCountry]);
+
+  // The following code defines the list of countries and their respective images
 
   const europeCountries = [
     { name: 'Germany', imgSrc: germanyImage },
